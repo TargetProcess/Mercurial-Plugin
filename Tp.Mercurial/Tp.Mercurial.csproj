@@ -48,7 +48,7 @@
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Web.Services3.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix">
-      <HintPath>..\Tp.SourceControl.Testing\bin\Debug\Mono.Posix.dll</HintPath>
+      <HintPath>libs\NGit\Mono.Posix.dll</HintPath>
     </Reference>
     <Reference Include="NGit">
       <HintPath>libs\NGit\NGit.dll</HintPath>
@@ -66,7 +66,7 @@
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
     </Reference>
     <Reference Include="Sharpen">
-      <HintPath>..\Tp.SourceControl.Testing\bin\Debug\Sharpen.dll</HintPath>
+      <HintPath>libs\NGit\Sharpen.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
