@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19379162-1B1D-402E-9025-F01ED76598C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tp.Mercurial</RootNamespace>
+    <AssemblyName>Tp.Mercurial</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.1.2.0\lib\1.0\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\packages\Common.Logging.Log4Net.1.2.0\lib\2.0\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Services3">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Web.Services3.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>..\Tp.SourceControl.Testing\bin\Debug\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="NGit">
+      <HintPath>libs\NGit\NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Host">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.Host.exe</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.ObjectBuilder.StructureMap262">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen">
+      <HintPath>..\Tp.SourceControl.Testing\bin\Debug\Sharpen.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Main.1.0.10621\lib\Net4\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tp.Core">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Integration.Messages">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Messages.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Integration.Plugin.Common">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Plugin.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Plugin.Core">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Plugin.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Service.Proxies">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Service.Proxies.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DeleteProfileCommandHandler.cs" />
+    <Compile Include="GitCheckConnectionCommand.cs" />
+    <Compile Include="GitCurrentProfileToConnectionSettingsAdapter.cs" />
+    <Compile Include="GitPluginProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RevisionStorage\GitRevisionStorageRepository.cs" />
+    <Compile Include="StructureMap\GitRegistry.cs" />
+    <Compile Include="VersionControlSystem\DateTimeExtensions.cs" />
+    <Compile Include="VersionControlSystem\GitCheckConnectionErrorResolver.cs" />
+    <Compile Include="VersionControlSystem\GitClient.cs" />
+    <Compile Include="VersionControlSystem\GitRepositoryFolder.cs" />
+    <Compile Include="VersionControlSystem\GitRevisionId.cs" />
+    <Compile Include="VersionControlSystem\GitRevisionIdComparer.cs" />
+    <Compile Include="VersionControlSystem\GitVersionControlSystem.cs" />
+    <Compile Include="VersionControlSystem\InvalidRevisionException.cs" />
+    <Compile Include="VersionControlSystem\MockSystemReader.cs" />
+    <Compile Include="VersionControlSystem\RevCommitExtensions.cs" />
+    <Compile Include="Workflow\GitUserMapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Install.bat" />
+    <None Include="Mashups\ViewDiff\placeholders.cfg" />
+    <None Include="packages.config" />
+    <None Include="PluginSettings.config" />
+    <None Include="Tp.Integration.Plugin.Common.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Uninstall.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="git-logo.png" />
+    <Content Include="Mashups\ProfileEditor\ProfileEditor.js" />
+    <Content Include="Mashups\ProfileEditor\registerMashup.js" />
+    <Content Include="Mashups\ProfileEditor\userMappingEditor.js" />
+    <Content Include="Mashups\Tests\.gitignore" />
+    <Content Include="Mashups\Tests\checkConnection.tests.js" />
+    <Content Include="Mashups\Tests\index.html" />
+    <Content Include="Mashups\Tests\Mocks\commandGatewayMock.js" />
+    <Content Include="Mashups\Tests\Mocks\navigatorMock.js" />
+    <Content Include="Mashups\Tests\Mocks\profilenamesourcemock.js" />
+    <Content Include="Mashups\Tests\Mocks\profilerepositorymock.js" />
+    <Content Include="Mashups\Tests\plugins.css" />
+    <Content Include="Mashups\Tests\profileEditor.tests.js" />
+    <Content Include="Mashups\Tests\testConfiguration.js" />
+    <Content Include="Mashups\Tests\userMappingEditor.tests.js" />
+    <Content Include="Mashups\Tests\userMappingLine.tests.js" />
+    <Content Include="Mashups\ViewDiff\RegisterMashup.js" />
+    <Content Include="Tp.Git.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tp.SourceControl\Tp.SourceControl.csproj">
+      <Project>{AC8B8885-D4F1-4EC9-A428-B90B2AC088C3}</Project>
+      <Name>Tp.SourceControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
