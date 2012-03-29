@@ -129,7 +129,6 @@
     <None Include="Uninstall.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="git-logo.png" />
     <Content Include="Mashups\ProfileEditor\ProfileEditor.js" />
     <Content Include="Mashups\ProfileEditor\registerMashup.js" />
     <Content Include="Mashups\ProfileEditor\userMappingEditor.js" />
@@ -146,7 +145,6 @@
     <Content Include="Mashups\Tests\userMappingEditor.tests.js" />
     <Content Include="Mashups\Tests\userMappingLine.tests.js" />
     <Content Include="Mashups\ViewDiff\RegisterMashup.js" />
-    <Content Include="Tp.Git.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tp.SourceControl\Tp.SourceControl.csproj">
