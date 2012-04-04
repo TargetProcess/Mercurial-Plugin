@@ -8,25 +8,25 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using Tp.Git.VersionControlSystem;
 using Tp.Integration.Messages.Ticker;
 using Tp.Integration.Plugin.Common;
 using Tp.Integration.Plugin.Common.Mapping;
 using Tp.Integration.Plugin.Common.Validation;
+using Tp.Mercurial.VersionControlSystem;
 using Tp.SourceControl.Settings;
 
-namespace Tp.Git
+namespace Tp.Mercurial
 {
 	[Profile]
 	[DataContract]
-	public class GitPluginProfile : ConnectionSettings, ISynchronizableProfile, IValidatable
+	public class MercurialPluginProfile : ConnectionSettings, ISynchronizableProfile, IValidatable
 	{
 		public const string StartRevisionField = "StartRevision";
 
-		public GitPluginProfile()
+		public MercurialPluginProfile()
 		{
 			UserMapping = new MappingContainer();
-			StartRevision = GitRevisionId.UtcTimeMin.ToShortDateString();
+		    StartRevision = MercurialRevisionId.UtcTimeMin.ToShortDateString();
 		}
 
 		[IgnoreDataMember]
@@ -57,10 +57,13 @@ namespace Tp.Git
 		private bool StartRevisionShouldNotExceedTheMax(PluginProfileErrorCollection errors)
 		{
 			DateTime result = DateTime.Parse(StartRevision, CultureInfo.InvariantCulture.DateTimeFormat, DateTimeStyles.AdjustToUniversal);
-			if (result > GitRevisionId.UtcTimeMax)
+			if (result > MercurialRevisionId.UtcTimeMax)
 			{
 				errors.Add(new PluginProfileError
-				{FieldName = StartRevisionField, Message = string.Format("Start Revision Date should be not behind {0}", GitRevisionId.UtcTimeMax.ToShortDateString())});
+				{
+				    FieldName = StartRevisionField, 
+                    Message = string.Format("Start Revision Date should be not behind {0}", MercurialRevisionId.UtcTimeMax.ToShortDateString())
+				});
 				return false;
 			}
 			return true;
@@ -69,10 +72,13 @@ namespace Tp.Git
 		private bool StartRevisionShouldBeNotLessThanMin(PluginProfileErrorCollection errors)
 		{
 			DateTime result = DateTime.Parse(StartRevision, CultureInfo.InvariantCulture.DateTimeFormat, DateTimeStyles.AdjustToUniversal);
-			if (result < GitRevisionId.UtcTimeMin)
+            if (result < MercurialRevisionId.UtcTimeMin)
 			{
 				errors.Add(new PluginProfileError
-				{FieldName = StartRevisionField, Message = string.Format("Start Revision Date should be not before {0}", GitRevisionId.UtcTimeMin.ToShortDateString())});
+				{
+				    FieldName = StartRevisionField, 
+                    Message = string.Format("Start Revision Date should be not before {0}", MercurialRevisionId.UtcTimeMin.ToShortDateString())
+				});
 				return false;
 			}
 			return true;
@@ -93,7 +99,7 @@ namespace Tp.Git
 
 		private void ValidateUriFormat(PluginProfileErrorCollection errors)
 		{
-			if (!string.IsNullOrEmpty(Uri) && !IsCommonUri() && !IsGitUri() && !IsFileUri())
+            if (!string.IsNullOrEmpty(Uri) && !IsCommonUri() && !IsGitUri() && !IsFileUri() && !IsFileshareUri())
 			{
 				errors.Add(IsSshUri()
 				           	? new PluginProfileError {Message = "Connection via SSH is not supported.", FieldName = UriField}
@@ -121,6 +127,11 @@ namespace Tp.Git
 		{
 			return Regex.IsMatch(Uri, @"^((http|https|ftp|ftps|rsync):)?//(.*@)?[\w\d\.~-]+(:\d+)?(/[\S]*)?$", RegexOptions.IgnoreCase);
 		}
+
+        private bool IsFileshareUri()
+        {
+            return Regex.IsMatch(Uri, @"^\\(\\[^\s\\\/\:*?<>|]+)+$", RegexOptions.IgnoreCase);
+        }
 
 		private void ValidateUriIsNotEmpty(PluginProfileErrorCollection errors)
 		{

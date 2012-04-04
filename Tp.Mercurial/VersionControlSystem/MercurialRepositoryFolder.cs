@@ -5,15 +5,17 @@
 
 using System;
 using System.IO;
+using Mercurial;
 using NGit.Storage.File;
 using StructureMap;
 using Tp.Integration.Plugin.Common;
 using Tp.Integration.Plugin.Common.Activity;
+using MercurialSDK = Mercurial;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
 	[Serializable]
-	public class GitRepositoryFolder
+    public class MercurialRepositoryFolder
 	{
 		public string Value { get; set; }
 		public string RepoUri { get; set; }
@@ -28,16 +30,7 @@ namespace Tp.Git.VersionControlSystem
 				return;
 			}
 
-			try
-			{
-				ShutdownGit(this);
-			}
-			catch (Exception ex)
-			{
-				ObjectFactory.GetInstance<IActivityLogger>().Error(ex);
-			}
-
-			try
+            try
 			{
 				DeleteDirectory();
 			}
@@ -53,24 +46,17 @@ namespace Tp.Git.VersionControlSystem
 			return Directory.Exists(Value) && !_wasMarkedAsDeleted;
 		}
 
-		private static void ShutdownGit(GitRepositoryFolder repositoryFolder)
-		{
-			var git = NGit.Api.Git.Open(repositoryFolder.Value);
-			git.GetRepository().Close();
-			WindowCache.Reconfigure(new WindowCacheConfig());
-		}
-
-		private void DeleteDirectory()
+        private void DeleteDirectory()
 		{
 			Value.DeleteDirectory();
 		}
 
-		public static GitRepositoryFolder Create(string repoUri)
+        public static MercurialRepositoryFolder Create(string repoUri)
 		{
-			return new GitRepositoryFolder {Value = Path.Combine(GitCloneRootFolder, Guid.NewGuid().ToString()), RepoUri = repoUri};
+            return new MercurialRepositoryFolder { Value = Path.Combine(MercurialCloneRootFolder, Guid.NewGuid().ToString()), RepoUri = repoUri };
 		}
 
-		protected static string GitCloneRootFolder
+		protected static string MercurialCloneRootFolder
 		{
 			get { return ObjectFactory.GetInstance<PluginDataFolder>().Path; }
 		}

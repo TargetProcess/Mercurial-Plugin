@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using Mercurial;
 using NGit.Api.Errors;
 using NGit.Revwalk;
 using Tp.Core;
@@ -15,31 +16,34 @@ using Tp.SourceControl.Diff;
 using Tp.SourceControl.Settings;
 using Tp.SourceControl.VersionControlSystem;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
-	public class GitVersionControlSystem : SourceControl.VersionControlSystem.VersionControlSystem
+	public class MercurialVersionControlSystem : SourceControl.VersionControlSystem.VersionControlSystem
 	{
 		private readonly IDiffProcessor _diffProcessor;
 
-		private readonly GitClient _git;
+		private readonly MercurialClient _mercurial;
 
-		public GitVersionControlSystem(ISourceControlConnectionSettingsSource settings, ICheckConnectionErrorResolver errorResolver, IActivityLogger logger, IDiffProcessor diffProcessor)
-			: base(settings, errorResolver, logger)
+        public MercurialVersionControlSystem(
+            ISourceControlConnectionSettingsSource settings, 
+            ICheckConnectionErrorResolver errorResolver, 
+            IActivityLogger logger, 
+            IDiffProcessor diffProcessor) : base(settings, errorResolver, logger)
 		{
 			_diffProcessor = diffProcessor;
-			_git = new GitClient(settings);
+            _mercurial = new MercurialClient(settings);
 		}
 
 		public override RevisionInfo[] GetRevisions(RevisionRange revisionRange)
 		{
-			return _git.GetRevisions(revisionRange.FromChangeset, revisionRange.ToChangeset);
+            return _mercurial.GetRevisions(revisionRange.FromChangeset, revisionRange.ToChangeset);
 		}
 
 		public override string GetTextFileContent(RevisionId changeset, string path)
 		{
-			var commit = _git.GetCommit(changeset);
+            var commit = _mercurial.GetCommit(changeset);
 
-			return GetFileContent(commit, path);
+            return GetFileContent(commit, path);
 		}
 
 		public override byte[] GetBinaryFileContent(RevisionId changeset, string path)
@@ -49,8 +53,8 @@ namespace Tp.Git.VersionControlSystem
 
 		public override void CheckRevision(RevisionId revision, PluginProfileErrorCollection errors)
 		{
-			GitRevisionId revisionId = revision;
-			if (revisionId.Time > GitRevisionId.UtcTimeMax)
+            MercurialRevisionId revisionId = revision;
+            if (revisionId.Time > MercurialRevisionId.UtcTimeMax)
 			{
 				_errorResolver.HandleConnectionError(new InvalidRevisionException(), errors);
 			}
@@ -58,28 +62,28 @@ namespace Tp.Git.VersionControlSystem
 
 		public override string[] RetrieveAuthors(DateRange dateRange)
 		{
-			return _git.RetrieveAuthors(dateRange);
+			return _mercurial.RetrieveAuthors(dateRange);
 		}
 
 		public override RevisionRange[] GetFromTillHead(RevisionId @from, int pageSize)
 		{
-			return _git.GetFromTillHead(from.Time.Value, pageSize).ToArray();
+            return _mercurial.GetFromTillHead(from.Time.Value, pageSize).ToArray();
 		}
 
 		public override RevisionRange[] GetAfterTillHead(RevisionId @from, int pageSize)
 		{
-			return _git.GetAfterTillHead(from, pageSize).ToArray();
+            return _mercurial.GetAfterTillHead(from, pageSize).ToArray();
 		}
 
 		public override RevisionRange[] GetFromAndBefore(RevisionId @from, RevisionId to, int pageSize)
 		{
-			return _git.GetFromAndBefore(from, to, pageSize).ToArray();
+            return _mercurial.GetFromAndBefore(from, to, pageSize).ToArray();
 		}
 
 		public override DiffResult GetDiff(RevisionId changeset, string path)
 		{
-			var commit = _git.GetCommit(changeset);
-			var parent = _git.GetCommit(commit.GetParent(0).Id.Name);
+            var commit = _mercurial.GetCommit(changeset);
+            var parent = _mercurial.GetParentCommit(commit);
 
 			try
 			{
@@ -91,19 +95,19 @@ namespace Tp.Git.VersionControlSystem
 			}
 		}
 
-		private DiffResult GetDiff(string path, RevCommit parent, RevCommit commit)
+        private DiffResult GetDiff(string path, Changeset prevCommmit, Changeset commit)
 		{
 			var fileContent = GetTextFileContentSafe(commit, path);
-			var previousRevisionFileContent = GetTextFileContentSafe(parent, path);
+            var previousRevisionFileContent = GetTextFileContentSafe(prevCommmit, path);
 			var diff = _diffProcessor.GetDiff(previousRevisionFileContent, fileContent);
 
-			diff.LeftPanRevisionId = parent.Id.Name;
-			diff.RightPanRevisionId = commit.Id.Name;
+            diff.LeftPanRevisionId = prevCommmit.RevisionNumber.ToString();
+            diff.RightPanRevisionId = commit.RevisionNumber.ToString();
 
 			return diff;
 		}
 
-		private string GetTextFileContentSafe(RevCommit commit, string path)
+		private string GetTextFileContentSafe(Changeset commit, string path)
 		{
 			try
 			{
@@ -115,9 +119,9 @@ namespace Tp.Git.VersionControlSystem
 			}
 		}
 
-		private string GetFileContent(RevCommit commit, string path)
-		{
-			return _git.GetFileContent(commit, path);
-		}
+        private string GetFileContent(Changeset commit, string path)
+        {
+            return _mercurial.GetFileContent(commit, path);
+        }
 	}
 }

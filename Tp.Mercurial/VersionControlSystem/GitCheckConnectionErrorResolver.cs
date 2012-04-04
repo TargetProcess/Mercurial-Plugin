@@ -8,6 +8,7 @@ using NGit.Api.Errors;
 using NGit.Errors;
 using Tp.Integration.Plugin.Common.Logging;
 using Tp.Integration.Plugin.Common.Validation;
+using Tp.Mercurial.VersionControlSystem;
 using Tp.SourceControl.Commands;
 
 namespace Tp.Git.VersionControlSystem

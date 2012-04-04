@@ -41,6 +41,9 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Mercurial.Net">
+      <HintPath>libs\Mercurial.Net\Mercurial.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -99,19 +102,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeleteProfileCommandHandler.cs" />
-    <Compile Include="GitCheckConnectionCommand.cs" />
-    <Compile Include="GitCurrentProfileToConnectionSettingsAdapter.cs" />
-    <Compile Include="GitPluginProfile.cs" />
+    <Compile Include="MercurialCheckConnectionCommand.cs" />
+    <Compile Include="MercurialCurrentProfileToConnectionSettingsAdapter.cs" />
+    <Compile Include="MercurialPluginProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevisionStorage\GitRevisionStorageRepository.cs" />
     <Compile Include="StructureMap\GitRegistry.cs" />
+    <Compile Include="VersionControlSystem\ChangesetExtensions.cs" />
     <Compile Include="VersionControlSystem\DateTimeExtensions.cs" />
+    <Compile Include="VersionControlSystem\FileActionExtensions.cs" />
     <Compile Include="VersionControlSystem\GitCheckConnectionErrorResolver.cs" />
-    <Compile Include="VersionControlSystem\GitClient.cs" />
-    <Compile Include="VersionControlSystem\GitRepositoryFolder.cs" />
+    <Compile Include="VersionControlSystem\MercurialClient.cs" />
+    <Compile Include="VersionControlSystem\MercurialRepositoryFolder.cs" />
     <Compile Include="VersionControlSystem\GitRevisionId.cs" />
-    <Compile Include="VersionControlSystem\GitRevisionIdComparer.cs" />
-    <Compile Include="VersionControlSystem\GitVersionControlSystem.cs" />
+    <Compile Include="VersionControlSystem\MercurialRevisionIdComparer.cs" />
+    <Compile Include="VersionControlSystem\MercurialVersionControlSystem.cs" />
     <Compile Include="VersionControlSystem\InvalidRevisionException.cs" />
     <Compile Include="VersionControlSystem\MockSystemReader.cs" />
     <Compile Include="VersionControlSystem\RevCommitExtensions.cs" />
@@ -119,9 +124,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Install.bat" />
-    <None Include="Mashups\ViewDiff\placeholders.cfg" />
+    <None Include="Mashups\ViewDiff\placeholders.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
-    <None Include="PluginSettings.config" />
+    <None Include="PluginSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Tp.Integration.Plugin.Common.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -129,9 +138,15 @@
     <None Include="Uninstall.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mashups\ProfileEditor\ProfileEditor.js" />
-    <Content Include="Mashups\ProfileEditor\registerMashup.js" />
-    <Content Include="Mashups\ProfileEditor\userMappingEditor.js" />
+    <Content Include="Mashups\ProfileEditor\ProfileEditor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mashups\ProfileEditor\registerMashup.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mashups\ProfileEditor\userMappingEditor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Mashups\Tests\.gitignore" />
     <Content Include="Mashups\Tests\checkConnection.tests.js" />
     <Content Include="Mashups\Tests\index.html" />
@@ -144,7 +159,9 @@
     <Content Include="Mashups\Tests\testConfiguration.js" />
     <Content Include="Mashups\Tests\userMappingEditor.tests.js" />
     <Content Include="Mashups\Tests\userMappingLine.tests.js" />
-    <Content Include="Mashups\ViewDiff\RegisterMashup.js" />
+    <Content Include="Mashups\ViewDiff\RegisterMashup.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tp.SourceControl\Tp.SourceControl.csproj">

@@ -10,6 +10,7 @@ using Tp.Integration.Common;
 using Tp.Integration.Plugin.Common.Activity;
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.Integration.Plugin.Common.Mapping;
+using Tp.Mercurial;
 using Tp.SourceControl.VersionControlSystem;
 using Tp.SourceControl.Workflow.Workflow;
 
@@ -57,7 +58,7 @@ namespace Tp.Git.Workflow
 
 		protected override MappingLookup GetTpUserFromMapping(RevisionInfo revision)
 		{
-			var userMapping = StorageRepository().GetProfile<GitPluginProfile>().UserMapping;
+            var userMapping = StorageRepository().GetProfile<MercurialPluginProfile>().UserMapping;
 			MappingLookup lookup = null;
 
 			if (AuthorEmailIsSpecified(revision))

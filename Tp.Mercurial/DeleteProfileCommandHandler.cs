@@ -9,8 +9,9 @@ using Tp.Integration.Messages.Commands;
 using Tp.Integration.Messages.PluginLifecycle;
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.Integration.Plugin.Common.Storage;
+using Tp.Mercurial.VersionControlSystem;
 
-namespace Tp.Git
+namespace Tp.Mercurial
 {
 	public class DeleteProfileCommandHandler : IHandleMessages<ExecutePluginCommandCommand>
 	{
@@ -25,7 +26,7 @@ namespace Tp.Git
 		{
 			if (message.CommandName == EmbeddedPluginCommands.DeleteProfile)
 			{
-				var folder = _storage.Get<GitRepositoryFolder>().FirstOrDefault();
+                var folder = _storage.Get<MercurialRepositoryFolder>().FirstOrDefault();
 				if(folder != null)
 				{
 					folder.Delete();

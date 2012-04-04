@@ -18,7 +18,7 @@ using Tp.SourceControl.VersionControlSystem;
 
 namespace Tp.Git.VersionControlSystem
 {
-	public static class RevCommitExtensions
+    public static class RevCommitExtensions
 	{
 		public static DateTime GetCommitTime(this RevCommit commit)
 		{

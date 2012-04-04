@@ -6,11 +6,11 @@
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.SourceControl;
 
-namespace Tp.Git
+namespace Tp.Mercurial
 {
-	public class GitCurrentProfileToConnectionSettingsAdapter : CurrentProfileToConnectionSettingsAdapter<GitPluginProfile>
+	public class MercurialCurrentProfileToConnectionSettingsAdapter : CurrentProfileToConnectionSettingsAdapter<MercurialPluginProfile>
 	{
-		public GitCurrentProfileToConnectionSettingsAdapter(IStorageRepository repository)
+		public MercurialCurrentProfileToConnectionSettingsAdapter(IStorageRepository repository)
 			: base(repository)
 		{
 		}

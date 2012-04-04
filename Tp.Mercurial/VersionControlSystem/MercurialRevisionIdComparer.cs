@@ -4,14 +4,15 @@
 // 
 
 using System;
+using System.Globalization;
 using System.Linq;
 using Tp.SourceControl.VersionControlSystem;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
-	public class GitRevisionIdComparer : IRevisionIdComparer, ICompareRevisionSecondArg
+	public class MercurialRevisionIdComparer : IRevisionIdComparer, ICompareRevisionSecondArg
 	{
-		private GitRevisionId _firstArg;
+		private MercurialRevisionId _firstArg;
 
 		public ICompareRevisionSecondArg Is(RevisionId firstArg)
 		{
@@ -31,7 +32,7 @@ namespace Tp.Git.VersionControlSystem
 				(from revisionRange in revisionRanges orderby revisionRange.FromChangeset.Time ascending select revisionRange).
 					FirstOrDefault();
 			
-			return result != null ? result.FromChangeset : new RevisionId {Time = GitRevisionId.UtcTimeMin};
+			return result != null ? result.FromChangeset : new RevisionId {Time = MercurialRevisionId.UtcTimeMin};
 		}
 
 		public RevisionId FindMaxToRevision(RevisionRange[] revisionRanges)
@@ -40,41 +41,42 @@ namespace Tp.Git.VersionControlSystem
 				(from revisionRange in revisionRanges orderby revisionRange.ToChangeset.Time descending select revisionRange).
 					FirstOrDefault();
 
-			return result != null ? result.ToChangeset : new RevisionId {Time = GitRevisionId.UtcTimeMin};
+            return result != null ? result.ToChangeset : new RevisionId { Time = MercurialRevisionId.UtcTimeMin };
 		}
 
 		public RevisionId ConvertToRevisionId(string startRevision)
 		{
-			var revisionId = (GitRevisionId) (RevisionId) startRevision;
-			revisionId.Time = DateTime.Parse(startRevision);
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            var revisionId = (MercurialRevisionId)(RevisionId)startRevision;
+			revisionId.Time = DateTime.ParseExact(startRevision, "d", provider);
 
 			return revisionId;
 		}
 
 		bool ICompareRevisionSecondArg.Before(RevisionRange revisionRange)
 		{
-			return _firstArg.Time < ((GitRevisionId) revisionRange.FromChangeset).Time;
+            return _firstArg.Time < ((MercurialRevisionId)revisionRange.FromChangeset).Time;
 		}
 
 		bool ICompareRevisionSecondArg.Behind(RevisionRange revisionRange)
 		{
-			return _firstArg.Time > ((GitRevisionId) revisionRange.ToChangeset).Time;
+            return _firstArg.Time > ((MercurialRevisionId)revisionRange.ToChangeset).Time;
 		}
 
 		bool ICompareRevisionSecondArg.Belong(RevisionRange revisionRange)
 		{
-			return _firstArg.Time >= ((GitRevisionId) revisionRange.FromChangeset).Time &&
-			       _firstArg.Time <= ((GitRevisionId) revisionRange.ToChangeset).Time;
+            return _firstArg.Time >= ((MercurialRevisionId)revisionRange.FromChangeset).Time &&
+                   _firstArg.Time <= ((MercurialRevisionId)revisionRange.ToChangeset).Time;
 		}
 
 		bool ICompareRevisionSecondArg.GreaterThan(RevisionId revisionId)
 		{
-			return _firstArg.Time > ((GitRevisionId) revisionId).Time;
+            return _firstArg.Time > ((MercurialRevisionId)revisionId).Time;
 		}
 
 		bool ICompareRevisionSecondArg.LessThan(RevisionId revisionId)
 		{
-			return _firstArg.Time < ((GitRevisionId) revisionId).Time;
+            return _firstArg.Time < ((MercurialRevisionId)revisionId).Time;
 		}
 	}
 }
