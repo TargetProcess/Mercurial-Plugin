@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Mercurial;
 using NGit;
@@ -111,16 +112,60 @@ namespace Tp.Mercurial.VersionControlSystem
 
         private static Repository GetClient(ISourceControlConnectionSettingsSource settings)
         {
+            var repositoryFolder = GetLocalRepository(settings);
+            if (IsRepositoryUriChanged(repositoryFolder, settings))
+            {
+                repositoryFolder.Delete();
+                repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
+                var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
+                repoFolderStorage.ReplaceWith(repositoryFolder);
+            }
+
+            Repository repository;
+
             try
             {
-                Uri uri = new Uri(settings.Uri);
-                return new Repository(uri.AbsolutePath);
+                if (repositoryFolder.Exists())
+                {
+                    repository = new Repository(repositoryFolder.Value);
+                }
+                else
+                {
+                    CloneCommand cloneCommand = new CloneCommand().WithUpdate(false);
+                    repository = new Repository(repositoryFolder.Value);
+                    repository.Clone(settings.Uri, cloneCommand);
+                }
             }
-            catch (ArgumentNullException exception)
+            catch (ArgumentNullException e)
             {
-                throw new ArgumentException("Invalid URI", exception);
-                //GitCheckConnectionErrorResolver.INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE, exception);
+                throw new ArgumentException(
+                    MercurialCheckConnectionErrorResolver.INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE, e);
             }
+            catch (FileNotFoundException e)
+            {
+                throw new ArgumentException(
+                    MercurialCheckConnectionErrorResolver.INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE, e);
+            }
+            catch (MercurialMissingException e)
+            {
+                throw new ArgumentException(
+                    MercurialCheckConnectionErrorResolver.MERCURIAL_IS_NOT_INSTALLED_ERROR_MESSAGE, e);
+            }
+
+            return repository;
+        }
+
+        private static MercurialRepositoryFolder GetLocalRepository(ISourceControlConnectionSettingsSource settings)
+        {
+            var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
+            if (repoFolderStorage.Empty())
+            {
+                var repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
+                repoFolderStorage.ReplaceWith(repositoryFolder);
+                return repositoryFolder;
+            }
+
+            return repoFolderStorage.Single();
         }
 
         private static IStorageRepository Repository
@@ -128,32 +173,12 @@ namespace Tp.Mercurial.VersionControlSystem
             get { return ObjectFactory.GetInstance<IStorageRepository>(); }
         }
 
-        //private void Fetch()
-        //{
-        //    var credentialsProvider = new UsernamePasswordCredentialsProvider(_settings.Login, _settings.Password);
-
-        //    _git.Clean().Call();
-        //    _git.Fetch().SetCredentialsProvider(credentialsProvider).SetRemoveDeletedRefs(true).Call();
-        //}
-
-        //private static bool IsRepositoryUriChanged(MercurialRepositoryFolder repositoryFolder,
-        //                                           ISourceControlConnectionSettingsSource settings)
-        //{
-        //    return (settings.Uri.ToLower() != repositoryFolder.RepoUri.ToLower()) && repositoryFolder.Exists();
-        //}
-
-        //private static MercurialRepositoryFolder GetLocalRepository(ISourceControlConnectionSettingsSource settings)
-        //{
-        //    var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
-        //    if (repoFolderStorage.Empty())
-        //    {
-        //        var repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
-        //        repoFolderStorage.ReplaceWith(repositoryFolder);
-        //        return repositoryFolder;
-        //    }
-
-        //    return repoFolderStorage.Single();
-        //}
+        private static bool IsRepositoryUriChanged(
+            MercurialRepositoryFolder repositoryFolder,
+            ISourceControlConnectionSettingsSource settings)
+        {
+            return (settings.Uri.ToLower() != repositoryFolder.RepoUri.ToLower()) && repositoryFolder.Exists();
+        }
 
         //private static RevFilter ApplyNoMergesFilter(RevFilter filter)
         //{

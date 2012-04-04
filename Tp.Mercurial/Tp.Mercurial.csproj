@@ -41,7 +41,8 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mercurial.Net">
+    <Reference Include="Mercurial.Net, Version=1.1.1.0, Culture=neutral, PublicKeyToken=d00c15f0cf307d22, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Mercurial.Net\Mercurial.Net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
@@ -111,10 +112,10 @@
     <Compile Include="VersionControlSystem\ChangesetExtensions.cs" />
     <Compile Include="VersionControlSystem\DateTimeExtensions.cs" />
     <Compile Include="VersionControlSystem\FileActionExtensions.cs" />
-    <Compile Include="VersionControlSystem\GitCheckConnectionErrorResolver.cs" />
+    <Compile Include="VersionControlSystem\MercurialCheckConnectionErrorResolver.cs" />
     <Compile Include="VersionControlSystem\MercurialClient.cs" />
     <Compile Include="VersionControlSystem\MercurialRepositoryFolder.cs" />
-    <Compile Include="VersionControlSystem\GitRevisionId.cs" />
+    <Compile Include="VersionControlSystem\MercurialRevisionId.cs" />
     <Compile Include="VersionControlSystem\MercurialRevisionIdComparer.cs" />
     <Compile Include="VersionControlSystem\MercurialVersionControlSystem.cs" />
     <Compile Include="VersionControlSystem\InvalidRevisionException.cs" />

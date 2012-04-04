@@ -4,28 +4,30 @@
 // 
 
 using System;
-using NGit.Api.Errors;
+using System.IO;
+using Mercurial;
 using NGit.Errors;
 using Tp.Integration.Plugin.Common.Logging;
 using Tp.Integration.Plugin.Common.Validation;
 using Tp.Mercurial.VersionControlSystem;
 using Tp.SourceControl.Commands;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
-	public class GitCheckConnectionErrorResolver : ICheckConnectionErrorResolver
+	public class MercurialCheckConnectionErrorResolver : ICheckConnectionErrorResolver
 	{
 		private readonly ILogManager _log;
 		public const string INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE = "invalid uri or insufficient access rights";
+        public const string MERCURIAL_IS_NOT_INSTALLED_ERROR_MESSAGE = "Mercurial is not installed.";
 
-		public GitCheckConnectionErrorResolver(ILogManager log)
+        public MercurialCheckConnectionErrorResolver(ILogManager log)
 		{
 			_log = log;
 		}
 
 		public void HandleConnectionError(Exception exception, PluginProfileErrorCollection errors)
 		{
-			_log.GetLogger("Git").Warn("Check connection failed", exception);
+			_log.GetLogger("Mercurial").Warn("Check connection failed", exception);
 			exception = exception.InnerException ?? exception;
 			const string uriFieldName = "Uri";
 			if (exception is TransportException)
@@ -36,20 +38,17 @@ namespace Tp.Git.VersionControlSystem
 				return;
 			}
 
-			if (exception is ArgumentNullException)
+            if (exception is ArgumentNullException || exception is DirectoryNotFoundException)
 			{
-				errors.Add(new PluginProfileError{FieldName = uriFieldName, Message = INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE});
+				errors.Add(new PluginProfileError{ FieldName = uriFieldName, Message = INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE });
 			}
+
+            if (exception is MercurialMissingException)
+            {
+                errors.Add(new PluginProfileError { Message = MERCURIAL_IS_NOT_INSTALLED_ERROR_MESSAGE });
+            }
 
 			var fieldName = string.Empty;
-			if (exception is JGitInternalException)
-			{
-				if (exception.Message.ToLower().Contains("invalid remote") || exception.Message.ToLower().Contains("uri"))
-				{
-					fieldName = uriFieldName;
-				}
-			}
-
 			if (exception is InvalidRevisionException)
 			{
 				fieldName = "Revision";

@@ -22,7 +22,7 @@ namespace Tp.Git.StructureMap
 	{
 		protected override void ConfigureCheckConnectionErrorResolver()
 		{
-			For<ICheckConnectionErrorResolver>().Use<GitCheckConnectionErrorResolver>();
+			For<ICheckConnectionErrorResolver>().Use<MercurialCheckConnectionErrorResolver>();
 		}
 
 		protected override void ConfigureSourceControlConnectionSettingsSource()

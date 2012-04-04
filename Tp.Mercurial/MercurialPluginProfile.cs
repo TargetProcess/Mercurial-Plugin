@@ -95,11 +95,34 @@ namespace Tp.Mercurial
 		{
 			ValidateUriIsNotEmpty(errors);
 			ValidateUriFormat(errors);
+            ValidateCredentialsInUri(errors);
 		}
+
+        private void ValidateCredentialsInUri(PluginProfileErrorCollection errors)
+        {
+            if (!Uri.StartsWith("http://") && !Uri.StartsWith("https://"))
+                return;
+
+            if (Uri.Contains(Login + "@") && !string.IsNullOrEmpty(Password))
+            {
+                Uri = Uri.Insert(Uri.IndexOf("@"), ":" + Password);
+            }
+            else if (!Uri.Contains(Login) && !string.IsNullOrEmpty(Login))
+            {
+                if (!string.IsNullOrEmpty(Password))
+                {
+                    Uri = Uri.Insert(Uri.LastIndexOf(@"://"), Login + ":" + Password + "@");
+                }
+                else
+                {
+                    Uri = Uri.Insert(Uri.LastIndexOf(@"://"), Login + "@");
+                }
+            }
+        }
 
 		private void ValidateUriFormat(PluginProfileErrorCollection errors)
 		{
-            if (!string.IsNullOrEmpty(Uri) && !IsCommonUri() && !IsGitUri() && !IsFileUri() && !IsFileshareUri())
+            if (!string.IsNullOrEmpty(Uri) && !IsCommonUri() && !IsFileUri() && !IsFileshareUri())
 			{
 				errors.Add(IsSshUri()
 				           	? new PluginProfileError {Message = "Connection via SSH is not supported.", FieldName = UriField}
@@ -113,10 +136,10 @@ namespace Tp.Mercurial
 				|| Regex.IsMatch(Uri, @"^(?!file:)(?!http:)(?!https:)(?!ftp:)(?!ftps:)(?!rsync:)(?!git:)(?!ssh:)(.+@)?[\w\d]+[\.][\w\d]+:(/~.+/)?\S*$", RegexOptions.IgnoreCase);
 		}
 
-		private bool IsGitUri()
-		{
-			return Regex.IsMatch(Uri, @"^git://([\w\d\.-]+)(:\d+)?/(~(\S+))?(\S*)?$", RegexOptions.IgnoreCase);
-		}
+        //private bool IsGitUri()
+        //{
+        //    return Regex.IsMatch(Uri, @"^git://([\w\d\.-]+)(:\d+)?/(~(\S+))?(\S*)?$", RegexOptions.IgnoreCase);
+        //}
 
 		private bool IsFileUri()
 		{

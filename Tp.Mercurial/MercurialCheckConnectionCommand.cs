@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using System.Threading;
 using Mercurial;
 using Tp.Integration.Plugin.Common.Validation;
 using Tp.Mercurial.VersionControlSystem;
@@ -35,9 +36,20 @@ namespace Tp.Mercurial
                 if (!_folder.Exists())
                     Directory.CreateDirectory(_folder.Value);
 
-                CloneCommand cloneCommand = new CloneCommand().WithAdditionalArgument("--noupdate");
+                CloneCommand cloneCommand = new CloneCommand().WithAdditionalArgument("--noupdate").WithTimeout(20);
                 Repository repository = new Repository(_folder.Value);
-                repository.Clone(settings.Uri);
+
+			    try
+			    {
+                    repository.Clone(settings.Uri);
+			    }
+			    catch (MercurialTimeoutException e)
+			    {
+                    var files = Directory.GetFiles("d:\\testmerc", "*.*", SearchOption.AllDirectories);
+
+                    if (files.Count() == 0)
+                        throw;
+			    }
 			}
 		}
 
