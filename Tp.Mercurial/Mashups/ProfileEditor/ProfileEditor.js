@@ -18,9 +18,9 @@ tau.mashups
 	        editorTemplate:
 				'<div>' +
 				'		<h2 class="h2">' +
-					'			Git Integration</h2>' +
+					'			Mercurial Integration</h2>' +
 					'		<p class="note">' +
-					'			Exports revisions from Git and binds source code to TargetProcess user stories, bugs and' +
+					'			Exports revisions from Mercurial and binds source code to TargetProcess user stories, bugs and' +
 					'			tasks.</p>' +
 					'		<div class="svn-settings">' +
 					'   <div class="pad-box">' +

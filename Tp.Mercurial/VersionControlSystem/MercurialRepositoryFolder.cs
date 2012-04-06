@@ -49,28 +49,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         private void DeleteDirectory()
 		{
-            //var files = Directory.GetFiles("d:\\testmerc", "*.*", SearchOption.AllDirectories);
-            //if (files.Length == 0)
-            //    throw new Exception();
-
-            //using (WaitHandle handle = new AutoResetEvent(false))
-            //{
-            //    while (true)
-            //    {
-            //        handle.WaitOne(100);
-
-            //        try
-            //        {
-            //            Directory.Delete("d:\\testmerc", true);
-            //            break;
-            //        }
-            //        catch
-            //        {
-            //            continue;
-            //        }
-            //    }
-            //}
-
 			Value.DeleteDirectory();
 		}
 

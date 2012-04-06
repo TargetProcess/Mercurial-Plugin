@@ -107,15 +107,15 @@ namespace Tp.Mercurial
             {
                 Uri = Uri.Insert(Uri.IndexOf("@"), ":" + Password);
             }
-            else if (!Uri.Contains(Login) && !string.IsNullOrEmpty(Login))
+            else if (!string.IsNullOrEmpty(Login) && !Uri.Contains(Login))
             {
                 if (!string.IsNullOrEmpty(Password))
                 {
-                    Uri = Uri.Insert(Uri.LastIndexOf(@"://"), Login + ":" + Password + "@");
+                    Uri = Uri.Insert(Uri.IndexOf(@"://") + @"://".Length, Login + ":" + Password + "@");
                 }
                 else
                 {
-                    Uri = Uri.Insert(Uri.LastIndexOf(@"://"), Login + "@");
+                    Uri = Uri.Insert(Uri.IndexOf(@"://") + @"://".Length, Login + "@");
                 }
             }
         }

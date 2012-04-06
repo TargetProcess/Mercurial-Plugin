@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Tp.Mercurial.Tests\libs\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,28 +33,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\Libs\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>libs\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Posix">
-      <HintPath>..\Tp.Git\libs\NGit\Mono.Posix.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>..\Tp.Git\libs\NGit\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="NGit">
-      <HintPath>..\Tp.Git\libs\NGit\NGit.dll</HintPath>
-    </Reference>
-    <Reference Include="NSch">
-      <HintPath>..\Tp.Git\libs\NGit\NSch.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen">
-      <HintPath>..\Tp.Git\libs\NGit\Sharpen.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpSvn">
-      <HintPath>..\..\Libs\svn64\SharpSvn.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\Libs\StructureMap\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap, Version=2.6.2.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,6 +48,10 @@
     <Reference Include="Tp.Core, Version=2.15.0.15001, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Integration.Messages, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Messages.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +64,10 @@
     <Compile Include="Repository\Git\GitTestRepositoryWithMergeCommit.cs" />
     <Compile Include="Repository\IVcsCredentials.cs" />
     <Compile Include="Repository\IVcsRepository.cs" />
-    <Compile Include="Repository\Svn\SvnTestRepository.cs" />
+    <Compile Include="Repository\Mercurial\MercurialTestRepository.cs" />
+    <Compile Include="Repository\Mercurial\MercurialTestRepositoryWithCherryPickedCommit.cs" />
+    <Compile Include="Repository\Mercurial\MercurialTestRepositoryWithFileDeleted.cs" />
+    <Compile Include="Repository\Mercurial\MercurialTestRepositoryWithMergeCommit.cs" />
     <Compile Include="VcsTestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Repository\Git\TestRepositoryWithMergeCommit.zip" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Repository\Svn\TestRepository.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,7 @@ using System.IO;
 using System.Reflection;
 using ICSharpCode.SharpZipLib.Zip;
 using Tp.SourceControl.Testing.Repository;
-using Tp.SourceControl.Testing.Repository.Svn;
+using Tp.SourceControl.Testing.Repository.Mercurial;
 
 namespace Tp.SourceControl.Testing
 {
@@ -34,7 +34,7 @@ namespace Tp.SourceControl.Testing
 
 		protected static string GetExecutingDirectory()
 		{
-			var fileName = new Uri(typeof (SvnTestRepository).Assembly.CodeBase).AbsolutePath;
+			var fileName = new Uri(typeof (MercurialTestRepository).Assembly.CodeBase).AbsolutePath;
 			return Path.GetDirectoryName(fileName);
 		}
 

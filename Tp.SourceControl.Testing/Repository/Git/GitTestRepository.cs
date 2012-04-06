@@ -6,7 +6,6 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using NGit;
 using StructureMap;
 
 namespace Tp.SourceControl.Testing.Repository.Git
@@ -18,7 +17,7 @@ namespace Tp.SourceControl.Testing.Repository.Git
 			ObjectFactory.Configure(x => x.For<GitTestRepository>().HybridHttpOrThreadLocalScoped().Use(this));
 		}
 
-		private NGit.Api.Git _git;
+		//private NGit.Api.Git _git;
 
 		private string ClonedRepoFolder
 		{
@@ -29,11 +28,11 @@ namespace Tp.SourceControl.Testing.Repository.Git
 		{
 			base.OnTestRepositoryDeployed();
 
-			_git = NGit.Api.Git.CloneRepository()
-				.SetURI(LocalRepositoryPath)
-				.SetDirectory(ClonedRepoFolder).Call();
+            //_git = NGit.Api.Git.CloneRepository()
+            //    .SetURI(LocalRepositoryPath)
+            //    .SetDirectory(ClonedRepoFolder).Call();
 
-			BatchingProgressMonitor.ShutdownNow();
+			//BatchingProgressMonitor.ShutdownNow();
 		}
 
 		protected override string Name
@@ -64,38 +63,40 @@ namespace Tp.SourceControl.Testing.Repository.Git
 				file.Write(changes, 0, changes.Length);
 			}
 
-			_git.Add().AddFilepattern(filePath).Call();
-			var commit = _git.Commit().SetMessage(commitComment).SetAuthor(Login, "admin@admin.com").Call();
-			_git.Push().Call();
+            //_git.Add().AddFilepattern(filePath).Call();
+            //var commit = _git.Commit().SetMessage(commitComment).SetAuthor(Login, "admin@admin.com").Call();
+            //_git.Push().Call();
 
-			BatchingProgressMonitor.ShutdownNow();
+            //BatchingProgressMonitor.ShutdownNow();
 
-			return commit.Id.Name;
+            //return commit.Id.Name;
+		    return "";
 		}
 
 		public override void CheckoutBranch(string branch)
 		{
 			var fullBranchName = "refs/heads/" + branch;
-			var list = _git.BranchList().Call();
-			var branchExists = list.Any(x => x.GetName() == fullBranchName);
-			if (!branchExists)
-			{
-				var remoteBranchName = "refs/remotes/origin/" + branch;
-				_git.BranchCreate().SetStartPoint(remoteBranchName).SetName(branch).Call();
-			}
-			_git.Checkout().SetName(branch).Call();
+            //var list = _git.BranchList().Call();
+            //var branchExists = list.Any(x => x.GetName() == fullBranchName);
+            //if (!branchExists)
+            //{
+            //    var remoteBranchName = "refs/remotes/origin/" + branch;
+            //    _git.BranchCreate().SetStartPoint(remoteBranchName).SetName(branch).Call();
+            //}
+            //_git.Checkout().SetName(branch).Call();
 
-			BatchingProgressMonitor.ShutdownNow();
+            //BatchingProgressMonitor.ShutdownNow();
 		}
 
 		public override string CherryPick(string revisionId)
 		{
-			var result = _git.CherryPick().Include(ObjectId.FromString(revisionId)).Call();
-			_git.Push().Call();
+            //var result = _git.CherryPick().Include(ObjectId.FromString(revisionId)).Call();
+            //_git.Push().Call();
 
-			BatchingProgressMonitor.ShutdownNow();
+            //BatchingProgressMonitor.ShutdownNow();
 
-			return result.GetCherryPickedRefs().Select(x => x.GetName()).First();
+            //return result.GetCherryPickedRefs().Select(x => x.GetName()).First();
+		    return "";
 		}
 	}
 }

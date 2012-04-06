@@ -50,11 +50,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Integration.Messages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Integration.Messages, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Messages.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Integration.Plugin.Common, Version=2.22.0.15001, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Integration.Plugin.Common, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Plugin.Common.dll</HintPath>
     </Reference>
@@ -72,14 +72,14 @@
     <Compile Include="VersionControlSystem\VersionControlSystemFactory.cs" />
     <Compile Include="VersionControlSystem\IVersionControlSystemFactory.cs" />
     <Compile Include="Commands\ViewDiffCommand.cs" />
-    <Compile Include="Diff\ChunkParser.cs" />
-    <Compile Include="Diff\Diff.cs" />
-    <Compile Include="Diff\DiffActionType.cs" />
-    <Compile Include="Diff\DiffChunk.cs" />
-    <Compile Include="Diff\DiffLineData.cs" />
-    <Compile Include="Diff\DiffProcessor.cs" />
-    <Compile Include="Diff\DiffResult.cs" />
-    <Compile Include="Diff\IDiffProcessor.cs" />
+    <Compile Include="Comments\Diff\ChunkParser.cs" />
+    <Compile Include="Comments\Diff\Diff.cs" />
+    <Compile Include="Comments\Diff\DiffActionType.cs" />
+    <Compile Include="Comments\Diff\DiffChunk.cs" />
+    <Compile Include="Comments\Diff\DiffLineData.cs" />
+    <Compile Include="Comments\Diff\DiffProcessor.cs" />
+    <Compile Include="Comments\Diff\DiffResult.cs" />
+    <Compile Include="Comments\Diff\IDiffProcessor.cs" />
     <Compile Include="RevisionStorage\TargetProcessRevisionId.cs" />
     <Compile Include="RevisionStorage\ImportedRevisionInfo.cs" />
     <Compile Include="RevisionStorage\RevisionStorageRepository.cs" />

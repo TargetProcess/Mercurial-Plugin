@@ -70,6 +70,9 @@
     <Reference Include="NServiceBus.ObjectBuilder.StructureMap262">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>libs\NUnit\framework\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="Sharpen">
       <HintPath>..\Tp.Mercurial\libs\NGit\Sharpen.dll</HintPath>
     </Reference>
@@ -97,11 +100,21 @@
     <Reference Include="Tp.Integration.Plugin.Common">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Plugin.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Tp.Integration.Testing.Common, Version=2.23.1.21660, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TargetProcessPluginSDK.Testing.2.23.2.21716\lib\Tp.Integration.Testing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Tp.Plugin.Core">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Plugin.Core.dll</HintPath>
     </Reference>
     <Reference Include="Tp.Service.Proxies">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Service.Proxies.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.SourceControl.Testing">
+      <HintPath>libs\Tp.SourceControl.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Testing.Common.NUnit">
+      <HintPath>libs\NUnit\addins\Tp.Testing.Common.NUnit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -110,8 +123,38 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\ContextExpectations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Context\CreateCommandExpectations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Context\VcsPluginContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MercurialPluginProfileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructureMap\VcsEnvironmentRegistry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StructureMap\VcsMockEnvironmentRegistry.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StructureMap\VersionControlSystemMock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserMapperTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VersionControlSystem\MercurialRevisionIdComparerSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VersionControlSystem\MercurialRevisionIdSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VersionControlSystem\MercurialSpecs.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\Tp.Mercurial.accessor" />
