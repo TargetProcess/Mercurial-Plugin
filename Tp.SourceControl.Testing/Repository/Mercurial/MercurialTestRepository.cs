@@ -6,7 +6,9 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using Mercurial;
 using StructureMap;
+using MercurialSDK = Mercurial;
 
 namespace Tp.SourceControl.Testing.Repository.Mercurial
 {
@@ -17,6 +19,7 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
             ObjectFactory.Configure(x => x.For<MercurialTestRepository>().HybridHttpOrThreadLocalScoped().Use(this));
 		}
 
+        private MercurialSDK.Repository _repositiory;
 		//private NGit.Api.Git _git;
 
 		private string ClonedRepoFolder
@@ -27,6 +30,14 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
 		protected override void OnTestRepositoryDeployed()
 		{
 			base.OnTestRepositoryDeployed();
+
+            if (Directory.Exists(ClonedRepoFolder))
+                Directory.Delete(ClonedRepoFolder, true);
+
+		    Directory.CreateDirectory(ClonedRepoFolder);
+
+            _repositiory = new MercurialSDK.Repository(ClonedRepoFolder);
+            _repositiory.Clone(LocalRepositoryPath, new CloneCommand());
 
             //_git = NGit.Api.Git.CloneRepository()
             //    .SetURI(LocalRepositoryPath)
@@ -63,13 +74,13 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
 				file.Write(changes, 0, changes.Length);
 			}
 
-            //_git.Add().AddFilepattern(filePath).Call();
-            //var commit = _git.Commit().SetMessage(commitComment).SetAuthor(Login, "admin@admin.com").Call();
-            //_git.Push().Call();
+            _repositiory.Add(new AddCommand().WithPaths(filePath));
+		    _repositiory.Commit(commitComment, new CommitCommand());
+            _repositiory.Push();
 
-            //BatchingProgressMonitor.ShutdownNow();
+		    var lastChangeset = _repositiory.Log().First();
 
-		    return ""; // commit.Id.Name;
+            return lastChangeset.Revision;
 		}
 
 		public override void CheckoutBranch(string branch)

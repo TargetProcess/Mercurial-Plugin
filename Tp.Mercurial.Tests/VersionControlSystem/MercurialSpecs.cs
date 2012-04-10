@@ -26,7 +26,6 @@ using Tp.SourceControl.Comments;
 using Tp.SourceControl.Diff;
 using Tp.SourceControl.RevisionStorage;
 using Tp.SourceControl.Settings;
-using Tp.SourceControl.Testing.Repository.Git;
 using Tp.SourceControl.Testing.Repository.Mercurial;
 using Tp.SourceControl.VersionControlSystem;
 using Tp.SourceControl.Workflow.Workflow;
@@ -38,7 +37,7 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 	public class MercurialSpecs : ISourceControlConnectionSettingsSource
 	{
 		private MercurialTestRepository _testRepository;
-		private string _gitRepoUri;
+		private string _mercurialRepoUri;
 		private IProfile _profile;
 
 		#region SetUp/TearDown
@@ -54,13 +53,13 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 				    new List<Assembly> {typeof (Command).Assembly})));
 
             _testRepository = new MercurialTestRepository();
-			_gitRepoUri = _testRepository.Uri.ToString();
+            _mercurialRepoUri = _testRepository.Uri.ToString();
 
 			_profile = ObjectFactory.GetInstance<TransportMock>().AddProfile(
                 "Profile", 
                 new MercurialPluginProfile
 			    {
-			        Uri = _gitRepoUri,
+                    Uri = _mercurialRepoUri,
 			        Login = _testRepository.Login,
 			        Password = _testRepository.Password,
 			        StartRevision = "1/1/1980"
@@ -69,7 +68,7 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 
 		string ISourceControlConnectionSettingsSource.Uri
 		{
-			get { return _gitRepoUri; }
+            get { return _mercurialRepoUri; }
 		}
 
 		string ISourceControlConnectionSettingsSource.Login
@@ -103,17 +102,17 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 			{
                 var revisionRange = mercurial.GetFromTillHead(CreateMercurialRevisionId(MercurialRevisionId.UtcTimeMin), 100).Single();
                 MercurialRevisionId fromChangeSet = revisionRange.FromChangeset;
-				fromChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2011-11-02 1:57:19 PM")));
+                fromChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2012-04-09 11:43:18 AM")));
 
                 MercurialRevisionId toChangeSet = revisionRange.ToChangeset;
-				toChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2011-11-04 11:32:04 AM")));
+                toChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2012-04-09 15:08:01 PM")));
 			}
 		}
 
 		[Test]
 		public void ShouldHandleConnectError()
 		{
-			_gitRepoUri = "//bla-bla";
+            _mercurialRepoUri = "//bla-bla";
 			try
 			{
                 using (CreateMercurial())
@@ -123,7 +122,7 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 			}
 			catch (Exception ex)
 			{
-				ex.Message.Should(Be.EqualTo("invalid uri or insufficient access rights"));
+				ex.Message.Should(Be.EqualTo("abort: repository //bla-bla not found!\n"));
 			}
 		}
 
@@ -132,13 +131,13 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 		{
             using (var mercurial = CreateMercurial())
 			{
-                MercurialRevisionId startRevisionId = CreateMercurialRevisionId(DateTime.Parse(("2011-11-04 8:42:11 AM")));
+                MercurialRevisionId startRevisionId = CreateMercurialRevisionId(DateTime.Parse(("2012-04-09 11:43:18 AM")));
                 var revisionRange = mercurial.GetFromTillHead(startRevisionId, 100).Single();
                 MercurialRevisionId fromChangeSet = revisionRange.FromChangeset;
 				fromChangeSet.Time.Should(Be.EqualTo(startRevisionId.Time));
 
                 MercurialRevisionId toChangeSet = revisionRange.ToChangeset;
-				toChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2011-11-04 11:32:04 AM")));
+                toChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2012-04-09 15:08:01 PM")));
 			}
 		}
 
@@ -151,11 +150,11 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
                 var revisionRange = mercurial.GetAfterTillHead(startRevisionId, 100).Single();
                 MercurialRevisionId fromChangeSet = revisionRange.FromChangeset;
 
-                MercurialRevisionId fromExpected = CreateMercurialRevisionId(DateTime.Parse("2011-11-04 11:30:19"));
+                MercurialRevisionId fromExpected = CreateMercurialRevisionId(DateTime.Parse("2012-04-09 11:43:18 AM"));
 				fromChangeSet.Time.Should(Be.EqualTo(fromExpected.Time));
 
                 MercurialRevisionId toChangeSet = revisionRange.ToChangeset;
-				toChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2011-11-04 11:32:04")));
+                toChangeSet.Time.Should(Be.EqualTo(DateTime.Parse("2012-04-09 15:08:01 PM")));
 			}
 		}
 
@@ -170,15 +169,15 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
             using (var mercurial = CreateMercurial())
 			{
 				var revisionRange =
-                    mercurial.GetFromAndBefore(CreateMercurialRevisionId(DateTime.Parse("2011-11-02 1:57:19 PM")),
-                                         CreateMercurialRevisionId(DateTime.Parse("2011-11-04 11:32:04 AM")), 100).Single();
+                    mercurial.GetFromAndBefore(CreateMercurialRevisionId(DateTime.Parse("2012-04-08 11:43:18 AM")),
+                                         CreateMercurialRevisionId(DateTime.Parse("2012-04-10 11:44:23 AM")), 100).Single();
                 MercurialRevisionId fromChangeSet = revisionRange.FromChangeset;
 
-                MercurialRevisionId fromExpected = CreateMercurialRevisionId(DateTime.Parse("2011-11-04 8:41:11 AM"));
+                MercurialRevisionId fromExpected = CreateMercurialRevisionId(DateTime.Parse("2012-04-09 11:43:18 AM"));
 				fromChangeSet.Time.Should(Be.EqualTo(fromExpected.Time));
 
 
-                MercurialRevisionId toExpected = CreateMercurialRevisionId(DateTime.Parse("2011-11-04 11:31:19 AM"));
+                MercurialRevisionId toExpected = CreateMercurialRevisionId(DateTime.Parse("2012-04-09 15:08:01 PM"));
                 MercurialRevisionId toChangeSet = revisionRange.ToChangeset;
 				toChangeSet.Time.Should(Be.EqualTo(toExpected.Time));
 			}
@@ -189,17 +188,17 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 		{
             using (var mercurial = CreateMercurial())
 			{
-                var authors = mercurial.RetrieveAuthors(new DateRange(MercurialRevisionId.UtcTimeMin, DateTime.UtcNow));
+                var authors = mercurial.RetrieveAuthors(new DateRange(MercurialRevisionId.UtcTimeMin, DateTime.Now));
 
-				authors.Should(Be.EquivalentTo(new[] {"Valentine Palazkov"}));
+				authors.Should(Be.EquivalentTo(new[] {"msuhinin"}));
 			}
 		}
 
 		[Test]
 		public void ShouldGetRevisions()
 		{
-			AssertCommits("first commit", "second commit to master", "Second Branch", "second commit to second branch",
-			              "First Branch Commit", "second commit");
+			AssertCommits("* files created", "* second commit", "commit to first branch",
+                "commit to second branch", "second commit to first branch", "second commit to second branch");
 		}
 
 		[Test]
@@ -207,19 +206,19 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 		{
             using (var mercurial = CreateMercurial())
 			{
-                MercurialRevisionId startRevisionId = CreateMercurialRevisionId(DateTime.Parse("2011-11-04 11:30:19 AM"));
+                MercurialRevisionId startRevisionId = CreateMercurialRevisionId(DateTime.Parse("2012-04-09 15:03:02 PM"));
                 var revisionRange = mercurial.GetFromTillHead(startRevisionId, 100).Single();
 
                 var revision = mercurial.GetRevisions(revisionRange).OrderBy(x => x.Time).First();
 
 				AssertEqual(revision.Entries, new[]
 				                              	{
+                                                    new RevisionEntryInfo {Path = "firstFile.txt", Action = FileActionEnum.Modify},
 				                              		new RevisionEntryInfo
-				                              			{Path = @"FirstFolder/firstFolderFile.txt", Action = FileActionEnum.Modify},
+				                              			{Path = @"firstFolder/firstFolderFile.txt", Action = FileActionEnum.Modify},
+				                              		new RevisionEntryInfo {Path = "secondFile.txt", Action = FileActionEnum.Modify},
 				                              		new RevisionEntryInfo
-				                              			{Path = @"SecondFolder/secondFolderFile.txt", Action = FileActionEnum.Modify},
-				                              		new RevisionEntryInfo {Path = "firstFile.txt", Action = FileActionEnum.Modify},
-				                              		new RevisionEntryInfo {Path = "secondFile.txt", Action = FileActionEnum.Modify}
+				                              			{Path = @"secondFolder/secondFolderFile.txt", Action = FileActionEnum.Modify}
 				                              	});
 			}
 		}
@@ -230,19 +229,20 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 		{
             using (var mercurial = CreateMercurial())
 			{
-                MercurialRevisionId startRevisionId = CreateMercurialRevisionId(DateTime.Parse("2011-11-02 1:57:19 PM"));
+                MercurialRevisionId startRevisionId = CreateMercurialRevisionId(DateTime.Parse("2012-04-09 11:43:18 AM"));
                 var revisionRange = mercurial.GetFromTillHead(startRevisionId, 100).Single();
 
                 var revision = mercurial.GetRevisions(revisionRange).OrderBy(x => x.Time).First();
 
 				AssertEqual(revision.Entries, new[]
 				                              	{
-				                              		new RevisionEntryInfo
-				                              			{Path = @"FirstFolder/firstFolderFile.txt", Action = FileActionEnum.Add},
-				                              		new RevisionEntryInfo
-				                              			{Path = @"SecondFolder/secondFolderFile.txt", Action = FileActionEnum.Add},
+                                                    new RevisionEntryInfo {Path = ".hgignore", Action = FileActionEnum.Add}, // mercurial auxiliary file
 				                              		new RevisionEntryInfo {Path = "firstFile.txt", Action = FileActionEnum.Add},
-				                              		new RevisionEntryInfo {Path = "secondFile.txt", Action = FileActionEnum.Add}
+				                              		new RevisionEntryInfo
+				                              			{Path = @"firstFolder/firstFolderFile.txt", Action = FileActionEnum.Add},
+				                              		new RevisionEntryInfo {Path = "secondFile.txt", Action = FileActionEnum.Add},
+				                              		new RevisionEntryInfo
+				                              			{Path = @"secondFolder/secondFolderFile.txt", Action = FileActionEnum.Add}
 				                              	});
 			}
 		}
@@ -250,8 +250,8 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 		[Test]
 		public void ShouldRetrieveRevisionsWithRemovedFiles()
 		{
-			var testRepo = new GitTestRepositoryWithFileDeleted();
-			_gitRepoUri = testRepo.Uri.ToString();
+			var testRepo = new MercurialTestRepositoryWithFileDeleted();
+            _mercurialRepoUri = testRepo.Uri.ToString();
             using (var mercurial = CreateMercurial())
 			{
                 MercurialRevisionId startRevisionId = CreateMercurialRevisionId(MercurialRevisionId.UtcTimeMin);
@@ -259,7 +259,7 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 
                 var revision = mercurial.GetRevisions(revisionRange).OrderByDescending(x => x.Time).First();
 
-				AssertEqual(revision.Entries, new[] {new RevisionEntryInfo {Path = "firstFile.txt", Action = FileActionEnum.Delete}});
+				AssertEqual(revision.Entries, new[] {new RevisionEntryInfo {Path = "deletedFile.txt", Action = FileActionEnum.Delete}});
 			}
 		}
 
@@ -286,7 +286,7 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 
                 var revisions = mercurial.GetRevisions(revisionRange);
 				revisions.Select(x => x.Comment).ToArray().Should(Be.EquivalentTo(commits));
-				revisions.Select(x => x.Author).Distinct().ToArray().Should(Be.EquivalentTo(new[] {"Valentine Palazkov"}));
+				revisions.Select(x => x.Author).Distinct().ToArray().Should(Be.EquivalentTo(new[] {"msuhinin"}));
 			}
 		}
 
@@ -310,7 +310,13 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
                 MercurialRevisionId correctRevisionId = CreateMercurialRevisionId(MercurialRevisionId.UtcTimeMax.AddYears(1));
 				var errors = new PluginProfileErrorCollection();
                 mercurial.CheckRevision(correctRevisionId, errors);
-				errors.Single().ToString().Should(Be.EqualTo("Revision: should be between 1/1/1970 and 1/19/2038"));
+
+			    string localizedMessage = string.Format(
+			        "Revision: should be between {0} and {1}",
+			        MercurialRevisionId.UtcTimeMin.ToShortDateString(),
+			        MercurialRevisionId.UtcTimeMax.ToShortDateString());
+
+				errors.Single().ToString().Should(Be.EqualTo(localizedMessage));
 			}
 		}
 
@@ -321,29 +327,28 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
 			{
 			}
 
-			var testRepo = new GitTestRepositoryWithMergeCommit();
-			_gitRepoUri = testRepo.Uri.ToString();
+			var testRepo = new MercurialTestRepositoryWithMergeCommit();
+            _mercurialRepoUri = testRepo.Uri.ToString();
 
-			AssertCommits("first commit", "second commit to master", "Second Branch", "second commit to second branch",
-			              "First Branch Commit", "second commit",
-			              "thirdth commit to second branch");
+            AssertCommits("* files created", "* second commit", "commit to first branch",
+                "commit to second branch", "second commit to first branch", "second commit to second branch", "changed in clone");
 		}
 
 		[Test]
 		public void ShouldNotImportDuplicateCommits()
 		{
-			var repo = new GitTestRepositoryWithCherryPickedCommit();
+			var repo = new MercurialTestRepositoryWithCherryPickedCommit();
 			var transportMock = ObjectFactory.GetInstance<TransportMock>();
-            var gitPluginProfile = new MercurialPluginProfile
+            var mercurialPluginProfile = new MercurialPluginProfile
 			                       	{
 			                       		Uri = repo.Uri.ToString(),
 			                       		Login = repo.Login,
 			                       		Password = repo.Password,
 			                       		StartRevision = "1/1/1980"
 			                       	};
-			var profile = transportMock.AddProfile("CherryPick", gitPluginProfile);
+            var profile = transportMock.AddProfile("CherryPick", mercurialPluginProfile);
 
-            using (var mercurial = CreateMercurial(gitPluginProfile))
+            using (var mercurial = CreateMercurial(mercurialPluginProfile))
 			{
                 var startRevisionId = CreateMercurialRevisionId(MercurialRevisionId.UtcTimeMin);
                 var revisionRange = mercurial.GetFromTillHead(startRevisionId, 100).Single();

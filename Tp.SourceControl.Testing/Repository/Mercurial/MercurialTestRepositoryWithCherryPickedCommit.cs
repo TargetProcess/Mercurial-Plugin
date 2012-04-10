@@ -11,7 +11,7 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
 	{
 		protected override string Name
 		{
-			get { return "TestRepositoryWithCherryPickedCommit"; }
+            get { return "TestRepositoryWithCherryPickedCommit"; }
 		}
 
 		public override string Login

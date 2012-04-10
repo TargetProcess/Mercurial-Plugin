@@ -39,7 +39,11 @@ namespace Tp.Mercurial.VersionControlSystem
 		    SyncronizeWithSourceRepository();
 
             var command = new LogCommand();
-            var pages = _repository.Log(command).Where(ch => ch.Timestamp >= from).ToArray().Split(pageSize);
+            var pages = _repository.Log(command).
+                Where(ch => ch.Timestamp >= from).
+                OrderBy(ch => ch.Timestamp).
+                ToArray().
+                Split(pageSize);
 
 		    var result = pages.Select(page => new RevisionRange(page.First().ToRevisionId(), page.Last().ToRevisionId()));
 
@@ -51,7 +55,11 @@ namespace Tp.Mercurial.VersionControlSystem
             SyncronizeWithSourceRepository();
 
             var command = new LogCommand();
-            var pages = _repository.Log(command).Where(ch => ch.Timestamp > revisionId.Time.Value).ToArray().Split(pageSize);
+            var pages = _repository.Log(command)
+                .Where(ch => ch.Timestamp > revisionId.Time.Value)
+                .OrderBy(ch => ch.Timestamp)
+                .ToArray()
+                .Split(pageSize);
 
             var result = pages.Select(page => new RevisionRange(page.First().ToRevisionId(), page.Last().ToRevisionId()));
 
@@ -65,6 +73,7 @@ namespace Tp.Mercurial.VersionControlSystem
             var command = new LogCommand();
             var pages = _repository.Log(command)
                 .Where(ch => (ch.Timestamp >= fromRevision.Time.Value && ch.Timestamp <= toRevision.Time.Value))
+                .OrderBy(ch => ch.Timestamp)
                 .ToArray()
                 .Split(pageSize);
 
@@ -97,7 +106,9 @@ namespace Tp.Mercurial.VersionControlSystem
             var command = new LogCommand();
             var authors = _repository.Log(command)
                 .Where(ch => ch.Timestamp >= dateRange.StartDate && ch.Timestamp <= dateRange.EndDate)
-                .Select(ch => ch.AuthorName).ToArray();
+                .Select(ch => ch.AuthorName)
+                .Distinct()
+                .ToArray();
 
             return authors;
         }
@@ -166,7 +177,7 @@ namespace Tp.Mercurial.VersionControlSystem
                 throw new ArgumentException(
                     MercurialCheckConnectionErrorResolver.MERCURIAL_IS_NOT_INSTALLED_ERROR_MESSAGE, e);
             }
-
+            
             return repository;
         }
 
