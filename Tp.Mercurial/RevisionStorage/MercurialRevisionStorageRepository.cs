@@ -8,11 +8,11 @@ using Tp.Integration.Plugin.Common.Domain;
 using Tp.SourceControl.RevisionStorage;
 using Tp.SourceControl.VersionControlSystem;
 
-namespace Tp.Git.RevisionStorage
+namespace Tp.Mercurial.RevisionStorage
 {
-	public class GitRevisionStorageRepository : RevisionStorageRepository
+	public class MercurialRevisionStorageRepository : RevisionStorageRepository
 	{
-		public GitRevisionStorageRepository(IStorageRepository repository, IProfileCollectionReadonly profiles)
+        public MercurialRevisionStorageRepository(IStorageRepository repository, IProfileCollectionReadonly profiles)
 			: base(repository, profiles)
 		{
 		}

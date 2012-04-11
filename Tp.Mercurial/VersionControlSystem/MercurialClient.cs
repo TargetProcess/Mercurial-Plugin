@@ -8,13 +8,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Mercurial;
-using NGit;
-using NGit.Revwalk;
-using NGit.Revwalk.Filter;
-using NGit.Transport;
 using StructureMap;
 using Tp.Core;
-using Tp.Git.VersionControlSystem;
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.SourceControl.Settings;
 using Tp.SourceControl.VersionControlSystem;
@@ -36,8 +31,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
 		public IEnumerable<RevisionRange> GetFromTillHead(DateTime from, int pageSize)
 		{
-		    SyncronizeWithSourceRepository();
-
             var command = new LogCommand();
             var pages = _repository.Log(command).
                 Where(ch => ch.Timestamp >= from).
@@ -52,8 +45,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         public IEnumerable<RevisionRange> GetAfterTillHead(RevisionId revisionId, int pageSize)
         {
-            SyncronizeWithSourceRepository();
-
             var command = new LogCommand();
             var pages = _repository.Log(command)
                 .Where(ch => ch.Timestamp > revisionId.Time.Value)
@@ -68,8 +59,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         public IEnumerable<RevisionRange> GetFromAndBefore(RevisionId fromRevision, RevisionId toRevision, int pageSize)
         {
-            SyncronizeWithSourceRepository();
-
             var command = new LogCommand();
             var pages = _repository.Log(command)
                 .Where(ch => (ch.Timestamp >= fromRevision.Time.Value && ch.Timestamp <= toRevision.Time.Value))
@@ -92,8 +81,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         public Changeset GetCommit(RevisionId id)
         {
-            SyncronizeWithSourceRepository();
-
             var command = new LogCommand().WithIncludePathActions();
             var changeset = _repository.Log(command).FirstOrDefault(ch => ch.Hash == id.Value);
             return changeset;
@@ -101,8 +88,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         public string[] RetrieveAuthors(DateRange dateRange)
         {
-            SyncronizeWithSourceRepository();
-
             var command = new LogCommand();
             var authors = _repository.Log(command)
                 .Where(ch => ch.Timestamp >= dateRange.StartDate && ch.Timestamp <= dateRange.EndDate)
@@ -115,8 +100,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         public RevisionInfo[] GetRevisions(RevisionId fromChangeset, RevisionId toChangeset)
         {
-            SyncronizeWithSourceRepository();
-
             var command = new LogCommand().WithIncludePathActions();
             var revisionInfos = _repository.Log(command)
                 .Where(ch => ch.Timestamp >= fromChangeset.Time.Value && ch.Timestamp <= toChangeset.Time.Value)
@@ -128,8 +111,6 @@ namespace Tp.Mercurial.VersionControlSystem
 
         public string GetFileContent(Changeset commit, string path)
 		{
-            SyncronizeWithSourceRepository();
-
             var command = new CatCommand().WithAdditionalArgument(string.Format("-r {0}", commit.RevisionNumber)).WithFile(path);
             _repository.Execute(command);
             return command.RawStandardOutput;
@@ -153,6 +134,7 @@ namespace Tp.Mercurial.VersionControlSystem
                 if (repositoryFolder.Exists())
                 {
                     repository = new Repository(repositoryFolder.Value);
+                    repository.Pull(new PullCommand());
                 }
                 else
                 {
@@ -205,42 +187,5 @@ namespace Tp.Mercurial.VersionControlSystem
         {
             return (settings.Uri.ToLower() != repositoryFolder.RepoUri.ToLower()) && repositoryFolder.Exists();
         }
-
-        /// <summary>
-        /// Synchronize local repository with source repository
-        /// </summary>
-        private void SyncronizeWithSourceRepository()
-        {
-            _repository.Pull(new PullCommand());
-        }
-        //private static RevFilter ApplyNoMergesFilter(RevFilter filter)
-        //{
-        //    return AndRevFilter.Create(new[] {RevFilter.NO_MERGES, filter});
-        //}
-
-        //private RevWalk CreateRevWalker()
-        //{
-        //    var repository = _git.GetRepository();
-        //    try
-        //    {
-        //        var revWalk = new RevWalk(repository);
-
-        //        foreach (var reference in repository.GetAllRefs())
-        //        {
-        //            revWalk.MarkStart(revWalk.ParseCommit(reference.Value.GetObjectId()));
-        //        }
-        //        return revWalk;
-        //    }
-        //    finally
-        //    {
-        //        repository.Close();
-        //    }
-        //}
-
-
-        //~MercurialClient()
-        //{
-        //    BatchingProgressMonitor.ShutdownNow();
-        //}
 	}
 }

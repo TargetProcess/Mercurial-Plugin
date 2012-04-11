@@ -4,11 +4,9 @@
 
 using System.Linq;
 using NServiceBus;
-using Tp.Git.VersionControlSystem;
 using Tp.Integration.Messages.Commands;
 using Tp.Integration.Messages.PluginLifecycle;
 using Tp.Integration.Plugin.Common.Domain;
-using Tp.Integration.Plugin.Common.Storage;
 using Tp.Mercurial.VersionControlSystem;
 
 namespace Tp.Mercurial

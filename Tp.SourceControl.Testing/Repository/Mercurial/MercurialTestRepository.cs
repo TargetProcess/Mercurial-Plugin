@@ -3,6 +3,7 @@
 // TargetProcess proprietary/confidential. Use is subject to license terms. Redistribution of this file is strictly forbidden.
 // 
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,6 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
 		}
 
         private MercurialSDK.Repository _repositiory;
-		//private NGit.Api.Git _git;
 
 		private string ClonedRepoFolder
 		{
@@ -38,12 +38,6 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
 
             _repositiory = new MercurialSDK.Repository(ClonedRepoFolder);
             _repositiory.Clone(LocalRepositoryPath, new CloneCommand());
-
-            //_git = NGit.Api.Git.CloneRepository()
-            //    .SetURI(LocalRepositoryPath)
-            //    .SetDirectory(ClonedRepoFolder).Call();
-
-            //BatchingProgressMonitor.ShutdownNow();
 		}
 
 		protected override string Name
@@ -83,30 +77,14 @@ namespace Tp.SourceControl.Testing.Repository.Mercurial
             return lastChangeset.Revision;
 		}
 
-		public override void CheckoutBranch(string branch)
-		{
-			var fullBranchName = "refs/heads/" + branch;
-            //var list = _git.BranchList().Call();
-            //var branchExists = list.Any(x => x.GetName() == fullBranchName);
-            //if (!branchExists)
-            //{
-            //    var remoteBranchName = "refs/remotes/origin/" + branch;
-            //    _git.BranchCreate().SetStartPoint(remoteBranchName).SetName(branch).Call();
-            //}
-            //_git.Checkout().SetName(branch).Call();
+        public override void CheckoutBranch(string branch)
+        {
+            throw new NotImplementedException();
+        }
 
-            //BatchingProgressMonitor.ShutdownNow();
-		}
-
-		public override string CherryPick(string revisionId)
-		{
-            //var result = _git.CherryPick().Include(ObjectId.FromString(revisionId)).Call();
-            //_git.Push().Call();
-
-            //BatchingProgressMonitor.ShutdownNow();
-
-            //return result.GetCherryPickedRefs().Select(x => x.GetName()).First();
-		    return "";
-		}
+        public override string CherryPick(string revisionId)
+        {
+            throw new NotImplementedException();
+        }
 	}
 }

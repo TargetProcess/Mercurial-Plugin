@@ -136,12 +136,7 @@ namespace Tp.Mercurial
 				|| Regex.IsMatch(Uri, @"^(?!file:)(?!http:)(?!https:)(?!ftp:)(?!ftps:)(?!rsync:)(?!git:)(?!ssh:)(.+@)?[\w\d]+[\.][\w\d]+:(/~.+/)?\S*$", RegexOptions.IgnoreCase);
 		}
 
-        //private bool IsGitUri()
-        //{
-        //    return Regex.IsMatch(Uri, @"^git://([\w\d\.-]+)(:\d+)?/(~(\S+))?(\S*)?$", RegexOptions.IgnoreCase);
-        //}
-
-		private bool IsFileUri()
+        private bool IsFileUri()
 		{
 			return Regex.IsMatch(Uri, @"^file:///\S+$", RegexOptions.IgnoreCase);
 		}
@@ -168,7 +163,7 @@ namespace Tp.Mercurial
 		{
 			if (UserMapping.Select(x => x.Key.ToLower()).Distinct().Count() != UserMapping.Count)
 			{
-				errors.Add(new PluginProfileError {FieldName = "user-mapping", Message = "Can't map an svn user to TargetProcess user twice."});
+				errors.Add(new PluginProfileError {FieldName = "user-mapping", Message = "Can't map an mercurial user to TargetProcess user twice."});
 			}
 		}
 

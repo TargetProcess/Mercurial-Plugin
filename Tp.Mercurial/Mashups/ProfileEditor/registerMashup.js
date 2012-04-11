@@ -1,12 +1,12 @@
 tau.mashups
 
 	.addDependency("tp/plugins/vcs/tpUsersPopoverWidget")
-	.addDependency("Git/ProfileEditor")
+	.addDependency("Mercurial/ProfileEditor")
 	.addDependency("tp/plugins/commandGateway")
 	.addDependency("tp/plugins/vcs/SubversionProfileEditorDefaultController")
 	.addDependency("tp/plugins/profileRepository")
 	.addDependency("tp/plugins/vcs/ui.widgets")
-	.addModule("Git/registerMashup",
+	.addModule("Mercurial/registerMashup",
 
 	function (tpUsersPopoverWidget,
 		SubversionProfileEditor,
@@ -70,7 +70,7 @@ tau.mashups
 	});
 
 tau.mashups
-	.addDependency("Git/registerMashup")
+	.addDependency("Mercurial/registerMashup")
 	.addMashup(function(subversionRenderer, config) {
 		var placeholder = $('#' + config.placeholderId);
 

@@ -9,18 +9,16 @@ using NGit.Storage.File;
 using NGit.Util;
 using Sharpen;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
 	public class MockSystemReader : SystemReader
 	{
 		private sealed class MockConfig : FileBasedConfig
 		{
 			public MockConfig(FilePath cfgLocation, FS fs)
-				: base
-					(cfgLocation, fs) {}
+				: base(cfgLocation, fs) {}
 
 			/// <exception cref="System.IO.IOException"></exception>
-			/// <exception cref="NGit.Errors.ConfigInvalidException"></exception>
 			public override void Load() {}
 
 			// Do nothing

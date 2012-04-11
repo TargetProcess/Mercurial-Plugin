@@ -5,9 +5,6 @@
 
 using System;
 using System.IO;
-using System.Threading;
-using Mercurial;
-using NGit.Storage.File;
 using StructureMap;
 using Tp.Integration.Plugin.Common;
 using Tp.Integration.Plugin.Common.Activity;

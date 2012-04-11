@@ -6,7 +6,6 @@
 using System;
 using System.IO;
 using Mercurial;
-using NGit.Errors;
 using Tp.Integration.Plugin.Common.Logging;
 using Tp.Integration.Plugin.Common.Validation;
 using Tp.Mercurial.VersionControlSystem;
@@ -30,7 +29,7 @@ namespace Tp.Mercurial.VersionControlSystem
 			_log.GetLogger("Mercurial").Warn("Check connection failed", exception);
 			exception = exception.InnerException ?? exception;
 			const string uriFieldName = "Uri";
-			if (exception is TransportException)
+			if (exception is MercurialExecutionException)
 			{
 				errors.Add(new PluginProfileError {FieldName = "Login", Message = exception.Message});
 				errors.Add(new PluginProfileError {FieldName = "Password", Message = exception.Message});

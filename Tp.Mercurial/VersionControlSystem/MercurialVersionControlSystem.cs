@@ -6,8 +6,6 @@
 using System;
 using System.Linq;
 using Mercurial;
-using NGit.Api.Errors;
-using NGit.Revwalk;
 using Tp.Core;
 using Tp.Integration.Plugin.Common.Activity;
 using Tp.Integration.Plugin.Common.Validation;
@@ -89,9 +87,9 @@ namespace Tp.Mercurial.VersionControlSystem
 			{
 				return GetDiff(path, parent, commit);
 			}
-			catch (GitAPIException ex)
+			catch (MercurialException ex)
 			{
-				throw new VersionControlException(String.Format("Git exception: {0}", ex.Message));
+				throw new VersionControlException(String.Format("Mercurial exception: {0}", ex.Message));
 			}
 		}
 

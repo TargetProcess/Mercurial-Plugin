@@ -20,7 +20,10 @@ namespace Tp.Mercurial
 	{
         private MercurialRepositoryFolder _folder;
 
-		protected override void CheckStartRevision(MercurialPluginProfile settings, IVersionControlSystem versionControlSystem, PluginProfileErrorCollection errors)
+		protected override void CheckStartRevision(
+            MercurialPluginProfile settings, 
+            IVersionControlSystem versionControlSystem, 
+            PluginProfileErrorCollection errors)
 		{
 			settings.ValidateStartRevision(errors);
 		}
@@ -45,7 +48,7 @@ namespace Tp.Mercurial
 			    }
 			    catch (MercurialTimeoutException e)
 			    {
-                    var files = Directory.GetFiles("d:\\testmerc", "*.*", SearchOption.AllDirectories);
+                    var files = Directory.GetFiles(_folder.Value, "*.*", SearchOption.AllDirectories);
 
                     if (files.Count() == 0)
                         throw;

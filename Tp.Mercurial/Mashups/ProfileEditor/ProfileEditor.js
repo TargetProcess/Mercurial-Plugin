@@ -4,7 +4,7 @@ tau.mashups
 	.addDependency("tp/plugins/profileControlsBlock")
 	.addDependency("tp/jquery.utils")
 	.addDependency("libs/jquery/jquery.tmpl")
-	.addModule("Git/ProfileEditor", function (UserMappingEditor, Bus, profileControlsBlock) {
+	.addModule("Mercurial/ProfileEditor", function (UserMappingEditor, Bus, profileControlsBlock) {
 
 	    function ProfileEditor(config) {
 	        this._create(config);

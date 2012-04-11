@@ -4,8 +4,7 @@
 // 
 
 using NGit.Util;
-using Tp.Git.RevisionStorage;
-using Tp.Git.VersionControlSystem;
+using Tp.Mercurial.RevisionStorage;
 using Tp.Mercurial.Workflow;
 using Tp.Mercurial.VersionControlSystem;
 using Tp.SourceControl.Commands;
@@ -44,7 +43,7 @@ namespace Tp.Mercurial.StructureMap
 
 		protected override void ConfigureRevisionStorage()
 		{
-			For<IRevisionStorageRepository>().Use<GitRevisionStorageRepository>();
+			For<IRevisionStorageRepository>().Use<MercurialRevisionStorageRepository>();
 		}
 
 		protected override void ConfigureUserMapper()
