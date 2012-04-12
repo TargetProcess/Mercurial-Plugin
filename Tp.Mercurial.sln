@@ -8,11 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tp.Mercurial.Tests", "Tp.Mercurial.Tests\Tp.Mercurial.Tests.csproj", "{0C824542-BA65-4CD2-94FF-7BA5F8BBE342}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B8C03E7-4B67-4572-9775-A7BF53A47497}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		Tp.Mercurial.vsmdi = Tp.Mercurial.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercurial.Net", "Mercurial.Net\Mercurial.Net.csproj", "{536B722B-DE28-48FC-ABAF-12B4B9FFB44A}"
 EndProject

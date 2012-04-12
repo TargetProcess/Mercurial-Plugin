@@ -48,7 +48,6 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Services3">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Web.Services3.dll</HintPath>
     </Reference>
@@ -154,9 +153,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Shadow Include="Test References\Tp.Mercurial.accessor" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Tp.Mercurial\Tp.Mercurial.csproj">
       <Project>{19379162-1B1D-402E-9025-F01ED76598C9}</Project>
       <Name>Tp.Mercurial</Name>
@@ -166,6 +162,7 @@
       <Name>Tp.SourceControl</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

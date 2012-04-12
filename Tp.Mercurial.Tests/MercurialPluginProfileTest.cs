@@ -1,12 +1,9 @@
 ﻿using System.Reflection;
 using NUnit.Framework;
 using Tp.Mercurial;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Tp.Integration.Plugin.Common.Validation;
 using Tp.Testing.Common.NUnit;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
 
 namespace Tp.Mercurial.Tests
 {
