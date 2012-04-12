@@ -35,4 +35,4 @@ using Tp.Integration.Plugin.Common;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: PluginAssembly("Mercurial", "Exports revisions from Mercurial and binds source code to TargetProcess user stories, bugs and tasks.", "Source Control")]
+[assembly: PluginAssembly("Mercurial", "Exports revisions from Mercurial and binds source code to TargetProcess user stories, bugs and tasks.", "Source Control", "mercurial-icon.png")]
