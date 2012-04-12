@@ -3,7 +3,6 @@
 // TargetProcess proprietary/confidential. Use is subject to license terms. Redistribution of this file is strictly forbidden.
 // 
 
-using NGit.Util;
 using Tp.Mercurial.RevisionStorage;
 using Tp.Mercurial.Workflow;
 using Tp.Mercurial.VersionControlSystem;
@@ -35,9 +34,6 @@ namespace Tp.Mercurial.StructureMap
 
 		protected override void ConfigureVersionControlSystem()
 		{
-			var mockSystemReader = new MockSystemReader(SystemReader.GetInstance());
-			SystemReader.SetInstance(mockSystemReader);
-
 			For<IVersionControlSystem>().Use<MercurialVersionControlSystem>();
 		}
 

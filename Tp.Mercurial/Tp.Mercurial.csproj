@@ -50,9 +50,6 @@
     <Reference Include="Mono.Posix">
       <HintPath>libs\NGit\Mono.Posix.dll</HintPath>
     </Reference>
-    <Reference Include="NGit">
-      <HintPath>libs\NGit\NGit.dll</HintPath>
-    </Reference>
     <Reference Include="NServiceBus">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.dll</HintPath>
     </Reference>
@@ -117,7 +114,6 @@
     <Compile Include="VersionControlSystem\MercurialRevisionIdComparer.cs" />
     <Compile Include="VersionControlSystem\MercurialVersionControlSystem.cs" />
     <Compile Include="VersionControlSystem\InvalidRevisionException.cs" />
-    <Compile Include="VersionControlSystem\MockSystemReader.cs" />
     <Compile Include="Workflow\MercurialUserMapper.cs" />
   </ItemGroup>
   <ItemGroup>
