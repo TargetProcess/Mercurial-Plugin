@@ -4,7 +4,7 @@ tau.mashups
 	.addDependency("tp/plugins/profileControlsBlock")
 	.addDependency("tp/jquery.utils")
 	.addDependency("libs/jquery/jquery.tmpl")
-	.addModule("Git/ProfileEditor", function (UserMappingEditor, Bus, profileControlsBlock) {
+	.addModule("Mercurial/ProfileEditor", function (UserMappingEditor, Bus, profileControlsBlock) {
 
 	    function ProfileEditor(config) {
 	        this._create(config);
@@ -18,9 +18,9 @@ tau.mashups
 	        editorTemplate:
 				'<div>' +
 				'		<h2 class="h2">' +
-					'			Git Integration</h2>' +
+					'			Mercurial Integration</h2>' +
 					'		<p class="note">' +
-					'			Exports revisions from Git and binds source code to TargetProcess user stories, bugs and' +
+					'			Exports revisions from Mercurial and binds source code to TargetProcess user stories, bugs and' +
 					'			tasks.</p>' +
 					'		<div class="svn-settings">' +
 					'   <div class="pad-box">' +

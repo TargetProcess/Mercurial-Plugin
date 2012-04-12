@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
 	public class InvalidRevisionException : Exception
 	{
-		private static readonly string Msg = string.Format("should be between {0} and {1}", GitRevisionId.UtcTimeMin.ToShortDateString(),
-		                                                    GitRevisionId.UtcTimeMax.ToShortDateString());
+        private static readonly string Msg = string.Format(
+            "should be between {0} and {1}", 
+            MercurialRevisionId.UtcTimeMin.ToShortDateString(),
+            MercurialRevisionId.UtcTimeMax.ToShortDateString());
 
 		public override string Message
 		{

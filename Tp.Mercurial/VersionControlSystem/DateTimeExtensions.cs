@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Tp.Git.VersionControlSystem
+namespace Tp.Mercurial.VersionControlSystem
 {
 	internal static class DateTimeExtensions
 	{

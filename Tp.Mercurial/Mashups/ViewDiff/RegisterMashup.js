@@ -4,5 +4,5 @@ tau.mashups
     .addCSS("../../tau/scripts/tp/codemirror/lib/codemirror.css")
     .addCSS("../../tau/scripts/tp/codemirror/theme/default.css")
     .addMashup(function (ViewDiffController, $, config) {
-        new ViewDiffController({ pluginName: 'Git', placeholder: $('#' + config.placeholderId) });
+        new ViewDiffController({ pluginName: 'Mercurial', placeholder: $('#' + config.placeholderId) });
     });
