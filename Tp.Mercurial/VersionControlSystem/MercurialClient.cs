@@ -134,7 +134,7 @@ namespace Tp.Mercurial.VersionControlSystem
                 if (repositoryFolder.Exists())
                 {
                     repository = new Repository(repositoryFolder.Value);
-                    repository.Pull(new PullCommand());
+                    repository.Pull(settings.Uri);
                 }
                 else
                 {

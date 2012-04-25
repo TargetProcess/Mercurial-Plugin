@@ -117,19 +117,24 @@
     <Compile Include="Workflow\MercurialUserMapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Install.bat" />
+    <None Include="Install.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Mashups\ViewDiff\placeholders.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="PluginSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Tp.Integration.Plugin.Common.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Uninstall.bat" />
+    <None Include="Uninstall.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Mashups\ProfileEditor\ProfileEditor.js">
