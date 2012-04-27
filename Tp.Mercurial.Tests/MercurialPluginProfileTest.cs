@@ -31,6 +31,13 @@ namespace Tp.Mercurial.Tests
             uri.Should(Be.EqualTo("https://vanya@server.com"));
         }
 
+        [Test]
+        public void ValidateCredentialsInUriWithLoginSubstringTest()
+        {
+            string uri = RunValidation("https://server.com/vanya", "vanya", "123456");
+            uri.Should(Be.EqualTo("https://vanya:123456@server.com/vanya"));
+        }
+
         private string RunValidation(string uri, string login, string password)
         {
             var profile = new MercurialPluginProfile();

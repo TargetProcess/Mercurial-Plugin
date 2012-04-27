@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NServiceBus">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.dll</HintPath>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\NServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
@@ -46,17 +46,17 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tp.Core, Version=2.15.0.15001, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Core, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Core.dll</HintPath>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Integration.Messages, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Integration.Messages, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Messages.dll</HintPath>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Integration.Messages.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Integration.Plugin.Common, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Integration.Plugin.Common, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Plugin.Common.dll</HintPath>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Integration.Plugin.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

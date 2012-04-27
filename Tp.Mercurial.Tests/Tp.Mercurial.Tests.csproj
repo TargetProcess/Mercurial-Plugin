@@ -87,26 +87,36 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Tp.Core">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Tp.Integration.Messages">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Messages.dll</HintPath>
-    </Reference>
-    <Reference Include="Tp.Integration.Plugin.Common">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Plugin.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Tp.Integration.Testing.Common, Version=2.23.1.21660, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Core, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TargetProcessPluginSDK.Testing.2.23.2.21716\lib\Tp.Integration.Testing.Common.dll</HintPath>
+      <HintPath>libs\Tp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Plugin.Core">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Plugin.Core.dll</HintPath>
+    <Reference Include="Tp.Integration.Messages, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Tp.Integration.Messages.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Service.Proxies">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Service.Proxies.dll</HintPath>
+    <Reference Include="Tp.Integration.Plugin.Common, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Tp.Integration.Plugin.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.SourceControl.Testing">
+    <Reference Include="Tp.Integration.Testing.Common, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TargetProcessPluginSDK.Testing.2.23.3.21882\lib\Tp.Integration.Testing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Plugin.Core, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Tp.Plugin.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Service.Proxies, Version=2.15.0.15001, Culture=neutral, PublicKeyToken=ee2a1130677e5334, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Tp.Service.Proxies.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.SourceControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Tp.SourceControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.SourceControl.Testing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Tp.SourceControl.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Tp.Testing.Common.NUnit">
@@ -156,10 +166,6 @@
     <ProjectReference Include="..\Tp.Mercurial\Tp.Mercurial.csproj">
       <Project>{19379162-1B1D-402E-9025-F01ED76598C9}</Project>
       <Name>Tp.Mercurial</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tp.SourceControl\Tp.SourceControl.csproj">
-      <Project>{AC8B8885-D4F1-4EC9-A428-B90B2AC088C3}</Project>
-      <Name>Tp.SourceControl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

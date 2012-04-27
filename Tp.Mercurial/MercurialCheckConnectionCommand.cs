@@ -40,7 +40,7 @@ namespace Tp.Mercurial
                     Directory.CreateDirectory(_folder.Value);
 
                 CloneCommand cloneCommand = new CloneCommand().WithAdditionalArgument("--noupdate").WithTimeout(20);
-                Repository repository = new Repository(_folder.Value);
+                Repository repository = new Repository(_folder.Value, new NonPersistentClientFactory());
 
 			    try
 			    {

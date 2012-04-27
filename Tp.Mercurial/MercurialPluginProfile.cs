@@ -103,11 +103,14 @@ namespace Tp.Mercurial
             if (!Uri.StartsWith("http://") && !Uri.StartsWith("https://"))
                 return;
 
-            if (Uri.Contains(Login + "@") && !string.IsNullOrEmpty(Password))
+            if ((Uri.StartsWith("http://" + Login + "@") || Uri.StartsWith("https://" + Login + "@")) 
+                && !string.IsNullOrEmpty(Password))
             {
+                // uri contains login, but does not contain password
                 Uri = Uri.Insert(Uri.IndexOf("@"), ":" + Password);
             }
-            else if (!string.IsNullOrEmpty(Login) && !Uri.Contains(Login))
+            else if (!string.IsNullOrEmpty(Login) && 
+                !(Uri.StartsWith("http://" + Login + "@") || Uri.StartsWith("https://" + Login + "@")))
             {
                 if (!string.IsNullOrEmpty(Password))
                 {

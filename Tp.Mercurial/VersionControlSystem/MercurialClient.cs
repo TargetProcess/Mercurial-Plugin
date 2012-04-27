@@ -10,6 +10,7 @@ using System.Linq;
 using Mercurial;
 using StructureMap;
 using Tp.Core;
+using Tp.Integration.Plugin.Common.Activity;
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.SourceControl.Settings;
 using Tp.SourceControl.VersionControlSystem;
@@ -28,6 +29,12 @@ namespace Tp.Mercurial.VersionControlSystem
 			_settings = settings;
 			_repository = GetClient(settings);
 		}
+
+        //~MercurialClient()
+        //{
+        //    if (_repository != null)
+        //        _repository.Dispose();
+        //}
 
 		public IEnumerable<RevisionRange> GetFromTillHead(DateTime from, int pageSize)
 		{
@@ -133,14 +140,18 @@ namespace Tp.Mercurial.VersionControlSystem
             {
                 if (repositoryFolder.Exists())
                 {
-                    repository = new Repository(repositoryFolder.Value);
+                    ObjectFactory.GetInstance<IActivityLogger>().WarnFormat("[GetClient] Repository folder exists. Path: {0}", repositoryFolder.Value);
+
+                    repository = new Repository(repositoryFolder.Value, new NonPersistentClientFactory());
                     repository.Pull(settings.Uri);
                 }
                 else
                 {
+                    ObjectFactory.GetInstance<IActivityLogger>().WarnFormat("[GetClient] New repository folder is created. Path: {0}", repositoryFolder.Value);
+
                     Directory.CreateDirectory(repositoryFolder.Value);
                     CloneCommand cloneCommand = new CloneCommand().WithUpdate(false);
-                    repository = new Repository(repositoryFolder.Value);
+                    repository = new Repository(repositoryFolder.Value, new NonPersistentClientFactory());
                     repository.Clone(settings.Uri, cloneCommand);
                 }
             }

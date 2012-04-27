@@ -41,7 +41,13 @@ namespace Tp.Mercurial.VersionControlSystem
 
 		public bool Exists()
 		{
-			return Directory.Exists(Value) && !_wasMarkedAsDeleted;
+		    bool exists = Directory.Exists(Value);
+            ObjectFactory.GetInstance<IActivityLogger>().WarnFormat(
+                "[MercurialRepositoryFolder.Exists()] exists: {0}, _wasMarkedAsDeleted: {1}", 
+                exists, 
+                _wasMarkedAsDeleted);
+
+			return exists && !_wasMarkedAsDeleted;
 		}
 
         private void DeleteDirectory()

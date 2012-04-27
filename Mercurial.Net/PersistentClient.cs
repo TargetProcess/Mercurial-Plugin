@@ -267,18 +267,18 @@ namespace Mercurial
             {
                 if (_Process != null && !_Process.HasExited)
                 {
-                    _Process.Dispose();
-                    _Process.Close();
-                    //_Process.WaitForExit();
+                    //_Process.Dispose();
+                    //_Process.Close();
+                    ////_Process.WaitForExit();
                     
                     //if (_Process.StandardInput.BaseStream.CanWrite)
-                    //    _Process.StandardInput.Write("dummycommandforceservertoquit\n");
+                        _Process.StandardInput.Write("dummycommandforceservertoquit\n");
 
                     //if (_Process.StandardInput..BaseStream != null)
-                    //    _Process.StandardInput.Close();
+                        _Process.StandardInput.Close();
 
                     //if (!_Process.HasExited)
-                    //    _Process.WaitForExit();
+                        _Process.WaitForExit();
 
                     _Process = null;
                 }    

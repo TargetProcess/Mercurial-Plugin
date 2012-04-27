@@ -41,26 +41,27 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Services3">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Microsoft.Web.Services3.dll</HintPath>
+    <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Microsoft.Web.Services3.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix">
       <HintPath>libs\NGit\Mono.Posix.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.dll</HintPath>
+    <Reference Include="NServiceBus, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\NServiceBus.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Core">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.Core.dll</HintPath>
+    <Reference Include="NServiceBus.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\NServiceBus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Host">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.Host.exe</HintPath>
+    <Reference Include="NServiceBus.Host, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\NServiceBus.Host.exe</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.ObjectBuilder.StructureMap262">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
+    <Reference Include="NServiceBus.ObjectBuilder.StructureMap262, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\NServiceBus.ObjectBuilder.StructureMap262.dll</HintPath>
     </Reference>
     <Reference Include="Sharpen">
       <HintPath>libs\NGit\Sharpen.dll</HintPath>
@@ -78,22 +79,24 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tp.Core">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Tp.Integration.Messages, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Messages.dll</HintPath>
+    <Reference Include="Tp.Core, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Integration.Plugin.Common, Version=2.23.2.21716, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+    <Reference Include="Tp.Integration.Messages, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Integration.Plugin.Common.dll</HintPath>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Integration.Messages.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Plugin.Core">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Plugin.Core.dll</HintPath>
+    <Reference Include="Tp.Integration.Plugin.Common, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Integration.Plugin.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Tp.Service.Proxies">
-      <HintPath>..\packages\TargetProcessPluginSDK.2.23.2.21716\lib\Tp.Service.Proxies.dll</HintPath>
+    <Reference Include="Tp.Plugin.Core, Version=2.23.3.21882, Culture=neutral, PublicKeyToken=90e3261511aad98d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Plugin.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Tp.Service.Proxies, Version=2.15.0.15001, Culture=neutral, PublicKeyToken=ee2a1130677e5334, processorArchitecture=MSIL">
+      <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Tp.Service.Proxies.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Mashups\ProfileEditor\ProfileEditor.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Mashups\ProfileEditor\registerMashup.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
