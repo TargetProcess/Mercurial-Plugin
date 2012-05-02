@@ -38,6 +38,20 @@ namespace Tp.Mercurial.Tests
             uri.Should(Be.EqualTo("https://vanya:123456@server.com/vanya"));
         }
 
+        [Test]
+        public void ValidateCredentialsRightUriTest()
+        {
+            string uri = RunValidation("https://vanya:123456@server.com/vanya", "vanya", "123456");
+            uri.Should(Be.EqualTo("https://vanya:123456@server.com/vanya"));
+        }
+
+        [Test]
+        public void ValidateCredentialsWithDiffCreditialsTest()
+        {
+            string uri = RunValidation("https://vanya:123456@server.com/vanya", "kolya", "password");
+            uri.Should(Be.EqualTo("https://vanya:123456@server.com/vanya"));
+        }
+
         private string RunValidation(string uri, string login, string password)
         {
             var profile = new MercurialPluginProfile();

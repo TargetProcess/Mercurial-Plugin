@@ -103,14 +103,14 @@ namespace Tp.Mercurial
             if (!Uri.StartsWith("http://") && !Uri.StartsWith("https://"))
                 return;
 
-            if ((Uri.StartsWith("http://" + Login + "@") || Uri.StartsWith("https://" + Login + "@")) 
-                && !string.IsNullOrEmpty(Password))
+            if (UriContainsCreditials())
+                return;
+
+            if (UriContainsLoginOnly() && !string.IsNullOrEmpty(Password))
             {
-                // uri contains login, but does not contain password
                 Uri = Uri.Insert(Uri.IndexOf("@"), ":" + Password);
             }
-            else if (!string.IsNullOrEmpty(Login) && 
-                !(Uri.StartsWith("http://" + Login + "@") || Uri.StartsWith("https://" + Login + "@")))
+            else if (!string.IsNullOrEmpty(Login) && !UriContainsLoginOnly())
             {
                 if (!string.IsNullOrEmpty(Password))
                 {
@@ -123,7 +123,17 @@ namespace Tp.Mercurial
             }
         }
 
-		private void ValidateUriFormat(PluginProfileErrorCollection errors)
+        private bool UriContainsCreditials()
+        {
+            return Regex.IsMatch(Uri, @"^((http|https):)//((\w+):(\w+)@)[\w\d\.~-]+(:\d+)?(/[\S]*)?$");
+        }
+
+        private bool UriContainsLoginOnly()
+        {
+            return Uri.StartsWith("http://" + Login + "@") || Uri.StartsWith("https://" + Login + "@");
+        }
+
+        private void ValidateUriFormat(PluginProfileErrorCollection errors)
 		{
             if (!string.IsNullOrEmpty(Uri) && !IsCommonUri() && !IsFileUri() && !IsFileshareUri())
 			{

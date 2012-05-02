@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\TargetProcessPluginSDK.2.23.3.21882\lib\Microsoft.Web.Services3.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Posix">
       <HintPath>libs\NGit\Mono.Posix.dll</HintPath>

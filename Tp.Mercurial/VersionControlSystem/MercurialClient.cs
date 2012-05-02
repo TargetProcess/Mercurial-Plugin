@@ -30,13 +30,7 @@ namespace Tp.Mercurial.VersionControlSystem
 			_repository = GetClient(settings);
 		}
 
-        //~MercurialClient()
-        //{
-        //    if (_repository != null)
-        //        _repository.Dispose();
-        //}
-
-		public IEnumerable<RevisionRange> GetFromTillHead(DateTime from, int pageSize)
+        public IEnumerable<RevisionRange> GetFromTillHead(DateTime from, int pageSize)
 		{
             var command = new LogCommand();
             var pages = _repository.Log(command).
@@ -140,15 +134,11 @@ namespace Tp.Mercurial.VersionControlSystem
             {
                 if (repositoryFolder.Exists())
                 {
-                    ObjectFactory.GetInstance<IActivityLogger>().WarnFormat("[GetClient] Repository folder exists. Path: {0}", repositoryFolder.Value);
-
                     repository = new Repository(repositoryFolder.Value, new NonPersistentClientFactory());
                     repository.Pull(settings.Uri);
                 }
                 else
                 {
-                    ObjectFactory.GetInstance<IActivityLogger>().WarnFormat("[GetClient] New repository folder is created. Path: {0}", repositoryFolder.Value);
-
                     Directory.CreateDirectory(repositoryFolder.Value);
                     CloneCommand cloneCommand = new CloneCommand().WithUpdate(false);
                     repository = new Repository(repositoryFolder.Value, new NonPersistentClientFactory());
