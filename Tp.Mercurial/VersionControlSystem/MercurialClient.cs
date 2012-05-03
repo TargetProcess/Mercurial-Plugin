@@ -23,10 +23,12 @@ namespace Tp.Mercurial.VersionControlSystem
 	{
 	    private readonly Repository _repository;
 		private readonly ISourceControlConnectionSettingsSource _settings;
+        private readonly IStorage<MercurialRepositoryFolder> _folder;
 
-		public MercurialClient(ISourceControlConnectionSettingsSource settings)
+        public MercurialClient(ISourceControlConnectionSettingsSource settings, IStorage<MercurialRepositoryFolder> folder)
 		{
-			_settings = settings;
+            _settings = settings;
+            _folder = folder;
 			_repository = GetClient(settings);
 		}
 
@@ -117,15 +119,14 @@ namespace Tp.Mercurial.VersionControlSystem
             return command.RawStandardOutput;
 		}
 
-        private static Repository GetClient(ISourceControlConnectionSettingsSource settings)
+        private Repository GetClient(ISourceControlConnectionSettingsSource settings)
         {
             var repositoryFolder = GetLocalRepository(settings);
             if (IsRepositoryUriChanged(repositoryFolder, settings))
             {
                 repositoryFolder.Delete();
                 repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
-                var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
-                repoFolderStorage.ReplaceWith(repositoryFolder);
+                _folder.ReplaceWith(repositoryFolder);
             }
 
             Repository repository;
@@ -164,22 +165,16 @@ namespace Tp.Mercurial.VersionControlSystem
             return repository;
         }
 
-        private static MercurialRepositoryFolder GetLocalRepository(ISourceControlConnectionSettingsSource settings)
+        private MercurialRepositoryFolder GetLocalRepository(ISourceControlConnectionSettingsSource settings)
         {
-            var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
-            if (repoFolderStorage.Empty())
+            if (_folder.Empty())
             {
                 var repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
-                repoFolderStorage.ReplaceWith(repositoryFolder);
+                _folder.ReplaceWith(repositoryFolder);
                 return repositoryFolder;
             }
 
-            return repoFolderStorage.Single();
-        }
-
-        private static IStorageRepository Repository
-        {
-            get { return ObjectFactory.GetInstance<IStorageRepository>(); }
+            return _folder.Single();
         }
 
         private static bool IsRepositoryUriChanged(
