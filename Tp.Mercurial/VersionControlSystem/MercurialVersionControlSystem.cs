@@ -8,6 +8,7 @@ using System.Linq;
 using Mercurial;
 using Tp.Core;
 using Tp.Integration.Plugin.Common.Activity;
+using Tp.Integration.Plugin.Common.Domain;
 using Tp.Integration.Plugin.Common.Validation;
 using Tp.SourceControl.Commands;
 using Tp.SourceControl.Diff;
@@ -19,17 +20,17 @@ namespace Tp.Mercurial.VersionControlSystem
 	public class MercurialVersionControlSystem : SourceControl.VersionControlSystem.VersionControlSystem
 	{
 		private readonly IDiffProcessor _diffProcessor;
-
 		private readonly MercurialClient _mercurial;
 
         public MercurialVersionControlSystem(
             ISourceControlConnectionSettingsSource settings, 
             ICheckConnectionErrorResolver errorResolver, 
             IActivityLogger logger, 
-            IDiffProcessor diffProcessor) : base(settings, errorResolver, logger)
+            IDiffProcessor diffProcessor,
+            IStorageRepository profile) : base(settings, errorResolver, logger)
 		{
 			_diffProcessor = diffProcessor;
-            _mercurial = new MercurialClient(settings);
+            _mercurial = new MercurialClient(settings, profile.Get<MercurialRepositoryFolder>());
 		}
 
 		public override RevisionInfo[] GetRevisions(RevisionRange revisionRange)

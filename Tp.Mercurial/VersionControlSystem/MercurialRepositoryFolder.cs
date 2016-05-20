@@ -41,7 +41,8 @@ namespace Tp.Mercurial.VersionControlSystem
 
 		public bool Exists()
 		{
-			return Directory.Exists(Value) && !_wasMarkedAsDeleted;
+		    bool exists = Directory.Exists(Value);
+            return exists && !_wasMarkedAsDeleted;
 		}
 
         private void DeleteDirectory()

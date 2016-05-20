@@ -3,6 +3,7 @@
 // TargetProcess proprietary/confidential. Use is subject to license terms. Redistribution of this file is strictly forbidden.
 // 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -45,12 +46,20 @@ namespace Tp.Mercurial.Tests
 		[SetUp]
 		public void Setup()
 		{
-			ObjectFactory.Initialize(x => x.AddRegistry<VcsMockEnvironmentRegistry>());
-			ObjectFactory.Configure(
-				x =>
-				x.For<TransportMock>().Use(TransportMock.CreateWithoutStructureMapClear(typeof (MercurialPluginProfile).Assembly,
-				                                                                        new List<Assembly>
-				                                                                        	{typeof (Command).Assembly})));
+		    try
+		    {
+                ObjectFactory.Initialize(x => x.AddRegistry<VcsMockEnvironmentRegistry>());
+                ObjectFactory.Configure(
+                    x =>
+                    x.For<TransportMock>().Use(TransportMock.CreateWithoutStructureMapClear(typeof(MercurialPluginProfile).Assembly,
+                                                                                            new List<Assembly> { typeof(Command).Assembly })));
+		    }
+		    catch (Exception e)
+		    {
+		        
+		        throw;
+		    }
+			
 
 			Context.CreateTpUser(_tpName, _tpLogin, _tpEmail, _tpId);
 			InitializeProfile();

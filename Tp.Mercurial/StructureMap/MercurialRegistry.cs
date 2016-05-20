@@ -3,6 +3,10 @@
 // TargetProcess proprietary/confidential. Use is subject to license terms. Redistribution of this file is strictly forbidden.
 // 
 
+using NServiceBus;
+using Tp.Integration.Plugin.Common;
+using Tp.Integration.Plugin.Common.Gateways;
+using Tp.Integration.Plugin.Common.PluginCommand;
 using Tp.Mercurial.RevisionStorage;
 using Tp.Mercurial.Workflow;
 using Tp.Mercurial.VersionControlSystem;
@@ -17,6 +21,11 @@ namespace Tp.Mercurial.StructureMap
 {
 	public class MercurialRegistry : SourceControlRegistry
 	{
+        public MercurialRegistry()
+        {
+            For<ICustomPluginSpecifyMessageHandlerOrdering>().Singleton().Use<MashupManagerPluginSpecifyMessageHandlerOrdering>();
+        }
+
 		protected override void ConfigureCheckConnectionErrorResolver()
 		{
 			For<ICheckConnectionErrorResolver>().Use<MercurialCheckConnectionErrorResolver>();
@@ -46,5 +55,13 @@ namespace Tp.Mercurial.StructureMap
 		{
 			For<UserMapper>().Use<MercurialUserMapper>();
 		}
+
+        public class MashupManagerPluginSpecifyMessageHandlerOrdering : ICustomPluginSpecifyMessageHandlerOrdering
+        {
+            public void SpecifyHandlersOrder(First<PluginGateway> ordering)
+            {
+                ordering.AndThen<DeleteProfileCommandHandler>().AndThen<PluginCommandHandler>();
+            }
+        }
 	}
 }

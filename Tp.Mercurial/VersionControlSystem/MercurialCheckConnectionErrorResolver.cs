@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using Mercurial;
 using Tp.Integration.Plugin.Common.Logging;
 using Tp.Integration.Plugin.Common.Validation;
@@ -17,7 +18,7 @@ namespace Tp.Mercurial.VersionControlSystem
 	{
 		private readonly ILogManager _log;
 		public const string INVALID_URI_OR_INSUFFICIENT_ACCESS_RIGHTS_ERROR_MESSAGE = "invalid uri or insufficient access rights";
-        public const string MERCURIAL_IS_NOT_INSTALLED_ERROR_MESSAGE = "Mercurial is not installed.";
+        public const string MERCURIAL_IS_NOT_INSTALLED_ERROR_MESSAGE = "Mercurial client is not installed.";
 
         public MercurialCheckConnectionErrorResolver(ILogManager log)
 		{
@@ -31,9 +32,9 @@ namespace Tp.Mercurial.VersionControlSystem
 			const string uriFieldName = "Uri";
 			if (exception is MercurialExecutionException)
 			{
-				errors.Add(new PluginProfileError {FieldName = "Login", Message = exception.Message});
-				errors.Add(new PluginProfileError {FieldName = "Password", Message = exception.Message});
-				errors.Add(new PluginProfileError {FieldName = uriFieldName, Message = exception.Message});
+                errors.Add(new PluginProfileError { FieldName = "Login", Message = ExtractValidErrorMessage(exception)});
+                errors.Add(new PluginProfileError { FieldName = "Password", Message = ExtractValidErrorMessage(exception) });
+                errors.Add(new PluginProfileError { FieldName = uriFieldName, Message = ExtractValidErrorMessage(exception) });
 				return;
 			}
 
@@ -55,5 +56,24 @@ namespace Tp.Mercurial.VersionControlSystem
 
 			errors.Add(new PluginProfileError {FieldName = fieldName, Message = exception.Message});
 		}
+
+        private string ExtractValidErrorMessage(Exception e)
+        {
+            if (string.IsNullOrEmpty(e.Message))
+                return string.Empty;
+
+            
+            if (e.Message.StartsWith("abort:"))
+            {
+                int length = e.Message.Contains("\n") ? e.Message.IndexOf('\n') - "abort:".Length : e.Message.Length - "abort:".Length;
+                return e.Message.Substring("abort:".Length, length).TrimEnd(new[] { ':', '\\', '/' });
+            }
+
+            if (e.Message.Contains("\n"))
+                return e.Message.Substring(0, e.Message.IndexOf('\n')).TrimEnd(new[] { ':', '\\', '/' });
+
+            return e.Message;
+            
+        }
 	}
 }

@@ -204,6 +204,9 @@ namespace Mercurial
 
                 if (!process.WaitForExit(timeout))
                 {
+                    process.Dispose();
+                    process.Kill();
+
                     if (command.Observer != null)
                         command.Observer.Executed(psi.FileName, psi.Arguments, 0, string.Empty, string.Empty);
                     throw new MercurialTimeoutException("The executable did not complete within the allotted time");

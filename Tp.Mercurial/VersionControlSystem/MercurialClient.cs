@@ -10,6 +10,7 @@ using System.Linq;
 using Mercurial;
 using StructureMap;
 using Tp.Core;
+using Tp.Integration.Plugin.Common.Activity;
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.SourceControl.Settings;
 using Tp.SourceControl.VersionControlSystem;
@@ -22,14 +23,16 @@ namespace Tp.Mercurial.VersionControlSystem
 	{
 	    private readonly Repository _repository;
 		private readonly ISourceControlConnectionSettingsSource _settings;
+        private readonly IStorage<MercurialRepositoryFolder> _folder;
 
-		public MercurialClient(ISourceControlConnectionSettingsSource settings)
+        public MercurialClient(ISourceControlConnectionSettingsSource settings, IStorage<MercurialRepositoryFolder> folder)
 		{
-			_settings = settings;
+            _settings = settings;
+            _folder = folder;
 			_repository = GetClient(settings);
 		}
 
-		public IEnumerable<RevisionRange> GetFromTillHead(DateTime from, int pageSize)
+        public IEnumerable<RevisionRange> GetFromTillHead(DateTime from, int pageSize)
 		{
             var command = new LogCommand();
             var pages = _repository.Log(command).
@@ -116,15 +119,14 @@ namespace Tp.Mercurial.VersionControlSystem
             return command.RawStandardOutput;
 		}
 
-        private static Repository GetClient(ISourceControlConnectionSettingsSource settings)
+        private Repository GetClient(ISourceControlConnectionSettingsSource settings)
         {
             var repositoryFolder = GetLocalRepository(settings);
             if (IsRepositoryUriChanged(repositoryFolder, settings))
             {
                 repositoryFolder.Delete();
                 repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
-                var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
-                repoFolderStorage.ReplaceWith(repositoryFolder);
+                _folder.ReplaceWith(repositoryFolder);
             }
 
             Repository repository;
@@ -133,14 +135,14 @@ namespace Tp.Mercurial.VersionControlSystem
             {
                 if (repositoryFolder.Exists())
                 {
-                    repository = new Repository(repositoryFolder.Value);
-                    repository.Pull(new PullCommand());
+                    repository = new Repository(repositoryFolder.Value, new NonPersistentClientFactory());
+                    repository.Pull(settings.Uri);
                 }
                 else
                 {
                     Directory.CreateDirectory(repositoryFolder.Value);
                     CloneCommand cloneCommand = new CloneCommand().WithUpdate(false);
-                    repository = new Repository(repositoryFolder.Value);
+                    repository = new Repository(repositoryFolder.Value, new NonPersistentClientFactory());
                     repository.Clone(settings.Uri, cloneCommand);
                 }
             }
@@ -163,22 +165,16 @@ namespace Tp.Mercurial.VersionControlSystem
             return repository;
         }
 
-        private static MercurialRepositoryFolder GetLocalRepository(ISourceControlConnectionSettingsSource settings)
+        private MercurialRepositoryFolder GetLocalRepository(ISourceControlConnectionSettingsSource settings)
         {
-            var repoFolderStorage = Repository.Get<MercurialRepositoryFolder>();
-            if (repoFolderStorage.Empty())
+            if (_folder.Empty())
             {
                 var repositoryFolder = MercurialRepositoryFolder.Create(settings.Uri);
-                repoFolderStorage.ReplaceWith(repositoryFolder);
+                _folder.ReplaceWith(repositoryFolder);
                 return repositoryFolder;
             }
 
-            return repoFolderStorage.Single();
-        }
-
-        private static IStorageRepository Repository
-        {
-            get { return ObjectFactory.GetInstance<IStorageRepository>(); }
+            return _folder.Single();
         }
 
         private static bool IsRepositoryUriChanged(

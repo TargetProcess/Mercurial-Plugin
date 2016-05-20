@@ -72,10 +72,10 @@ namespace Tp.SourceControl.RevisionStorage
 					new
 						{
 							Revisions = profile.Get<RevisionIdRelation>(storageNames),
-							Profile = profile.GetProfile<ISourceControlConnectionSettingsSource>()
+							Profile = profile
 						})
 				.SelectMany(
-					x => x.Revisions.Select(rev => new ImportedRevisionInfo {ConnectionSettings = x.Profile, RevisionId = rev}))
+					x => x.Revisions.Select(rev => new ImportedRevisionInfo {Profile = x.Profile, RevisionId = rev}))
 					.ToList();
 		}
 	}

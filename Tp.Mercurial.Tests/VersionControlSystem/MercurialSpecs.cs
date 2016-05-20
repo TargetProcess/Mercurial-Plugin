@@ -419,7 +419,8 @@ namespace Tp.Mercurial.Tests.VersionControlSystem
                 settings, 
                 ObjectFactory.GetInstance<ICheckConnectionErrorResolver>(),
                 ObjectFactory.GetInstance<IActivityLogger>(), 
-                ObjectFactory.GetInstance<IDiffProcessor>());
+                ObjectFactory.GetInstance<IDiffProcessor>(),
+                ObjectFactory.GetInstance<IStorageRepository>());
 		}
 
 		#endregion

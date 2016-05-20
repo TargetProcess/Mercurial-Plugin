@@ -4,10 +4,12 @@
 
 using System.Linq;
 using NServiceBus;
+using StructureMap;
 using Tp.Integration.Messages.Commands;
 using Tp.Integration.Messages.PluginLifecycle;
 using Tp.Integration.Plugin.Common.Domain;
 using Tp.Mercurial.VersionControlSystem;
+using Tp.SourceControl.Settings;
 
 namespace Tp.Mercurial
 {
@@ -25,10 +27,10 @@ namespace Tp.Mercurial
 			if (message.CommandName == EmbeddedPluginCommands.DeleteProfile)
 			{
                 var folder = _storage.Get<MercurialRepositoryFolder>().FirstOrDefault();
-				if(folder != null)
-				{
-					folder.Delete();
-				}
+                if (folder != null)
+                {
+                    folder.Delete();
+                }
 			}
 		}
 	}

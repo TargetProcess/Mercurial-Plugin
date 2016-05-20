@@ -36,7 +36,7 @@ tau.mashups
 					'				<p class="label">' +
 					'					Enter a full path to the repository&nbsp;<a id="uriExamplesLink" class="small" href="javascript:void(0);">Examples</a>' +
                     '               <span class="error" name="UriErrorLabel"></span></p>' +
-                    '               <div id="uriExamplesContent" style="display:none" class="small pt-10 pb-10"><p class="label pb-5">URL examples:</p><p class="rules-actions">git://github.com/Company/Project.git</p><p class="rules-actions">https://github.com/Company/Project.git</p><p class="rules-actions">file:///c:/Repository</p><p class="rules-actions">//localserver/trunk</p></div><p/> ' +
+                    '               <div id="uriExamplesContent" style="display:none" class="small pt-10 pb-10"><p class="label pb-5">URL examples:</p><p class="rules-actions">https://username:password@bitbucket.org/username/Project</p><p class="rules-actions">https://username@bitbucket.org/username/Project</p><p class="rules-actions">file:///c:/Repository</p><p class="rules-actions">//localserver/trunk</p></div><p/> ' +
 					'				<input type="text" class="input" name="Uri" id="uri" value="${Settings.Uri}" style="width: 100%;" /><br />' +
 					'				<p class="label">' +
 					'				<p class="label pt-10">' +
@@ -96,7 +96,18 @@ tau.mashups
 
 	            var errors = args;
 	            this.checkConnectionErrors(errors);
-	            this.placeHolder.find('#failedConnection').show().find('span').text('Unable to establish connection');
+
+	            var errorMessage = "Unable to establish connection";
+	            if (errors.length > 0) {
+	                for (var i = 0; i < errors.length; i++) {
+	                    var error = errors[i];
+
+	                    if (error.Message == "Mercurial client is not installed.")
+	                        errorMessage += (". " + error.Message);
+	                }
+	            }
+
+	            this.placeHolder.find('#failedConnection').show().find('span').text(errorMessage);
 	        },
 
 	        onCheckConnectionError: function (responseText) {
@@ -115,9 +126,9 @@ tau.mashups
 
 	            rendered.appendTo(this.placeHolder);
 
-                rendered.find('#uriExamplesLink').click(function () {
-                    $('#uriExamplesContent').animate({ opacity: 'toggle', height: 'toggle' }, 'slow');
-                });
+	            rendered.find('#uriExamplesLink').click(function () {
+	                $('#uriExamplesContent').animate({ opacity: 'toggle', height: 'toggle' }, 'slow');
+	            });
 
 	            this._disableNameIfNecessary();
 
@@ -129,7 +140,7 @@ tau.mashups
 	            this.UserMappingEditor.render();
 
 	            this.placeHolder.find('.collapsable').live('click', this._toggle);
-                this.placeHolder.find('#startRevision').datepicker({minDate: "01/01/1970", maxDate: "01/19/2038"});
+	            this.placeHolder.find('#startRevision').datepicker({ minDate: "01/01/1970", maxDate: "01/19/2038" });
 
 	            new profileControlsBlock({ placeholder: rendered }).render();
 	        },
